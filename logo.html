@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logo</title>
+</head>
+<body>
+
+
+<style>
+
+    body {
+        margin: 0;
+        background: #EEE;
+        font-family: Arial, sans-serif;
+    }
+    a {
+        position: absolute;
+        left: 0;
+        bottom: 40px;
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 10px;
+        color: #999;
+    }
+
+
+
+    /* ===============
+       ANIMATED LOGO
+       =============== */
+
+
+
+    /* ---------------
+       1. Markup
+       --------------- */
+
+
+
+    /* global */
+
+    #logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -45px;
+        margin-left: -75px;
+        width: 151px;
+        height: 89px;
+    }
+    #logo div {
+        position: absolute;
+    }
+
+
+
+    /* border */
+
+    #logo .lb {
+        left: 0;
+        top: 0;
+        width: 151px;
+        height: 89px;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+    #logo .lb div:before,
+    #logo .lb div:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+    #logo .lb .lbl {
+        top: -18px;
+        left: 0;
+        height: 77px;
+        width: 3px;
+        background: #E72B37;
+    }
+    #logo .lb .lbl:before {
+        top: -6px;
+        left: 0;
+        border-width: 6px 0 0 3px;
+        border-color: transparent transparent transparent #E72B37;
+    }
+    #logo .lb .lbl:after {
+        bottom: -6px;
+        left: 0;
+        border-width: 6px 3px 0 0;
+        border-color: #E72B37 transparent transparent transparent;
+    }
+    #logo .lb .lbt {
+        top: 0;
+        left: -70px;
+        height: 3px;
+        width: 139px;
+        background: #E72B37;
+    }
+    #logo .lb .lbt:before {
+        top: 0;
+        left: -6px;
+        border-width: 0 6px 3px 0;
+        border-color: transparent #E72B37 transparent transparent;
+    }
+    #logo .lb .lbt:after {
+        top: 0;
+        right: -6px;
+        border-width: 3px 6px 0 0;
+        border-color: #E72B37 transparent transparent transparent;
+    }
+    #logo .lb .lbr {
+        bottom: -18px;
+        right: 0;
+        height: 77px;
+        width: 3px;
+        background: #E72B37;
+    }
+    #logo .lb .lbr:before {
+        top: -6px;
+        left: 0;
+        border-width: 0 0 6px 3px;
+        border-color: transparent transparent #E72B37 transparent;
+    }
+    #logo .lb .lbr:after {
+        bottom: -6px;
+        left: 0;
+        border-width: 0 3px 6px 0;
+        border-color: transparent #E72B37 transparent transparent;
+    }
+    #logo .lb .lbb {
+        bottom: 0;
+        right: -70px;
+        height: 3px;
+        width: 139px;
+        background: #E72B37;
+    }
+    #logo .lb .lbb:before {
+        top: 0;
+        left: -6px;
+        border-width: 0 0 3px 6px;
+        border-color: transparent transparent #E72B37 transparent;
+    }
+    #logo .lb .lbb:after {
+        top: 0;
+        right: -6px;
+        border-width: 3px 0 0 6px;
+        border-color: transparent transparent transparent #E72B37;
+    }
+
+
+
+    /* title */
+
+    #logo .lt {
+        top: 7px;
+        left: 8px;
+        width: 135px;
+        height: 44px;
+    }
+    #logo .lt .lto,
+    #logo .lt .ltv,
+    #logo .lt .lte,
+    #logo .lt .ltr,
+    #logo .lt .ltl,
+    #logo .lt .lta,
+    #logo .lt .ltn,
+    #logo .lt .ltd {
+        top: 0;
+        height: 39px;
+        background: url("logo-sprite.png") no-repeat;
+    }
+    #logo .lt .lto {
+        width: 14px;
+        left: 1px;
+        background-position: -1px -1px;
+    }
+    #logo .lt .ltv {
+        width: 17px;
+        left: 16px;
+        background-position: -17px -1px;
+    }
+    #logo .lt .lte {
+        width: 18px;
+        left: 31px;
+        background-position: -36px -1px;
+    }
+    #logo .lt .ltr {
+        width: 18px;
+        left: 49px;
+        background-position: -56px -1px;
+    }
+    #logo .lt .ltl {
+        width: 12px;
+        left: 70px;
+        background-position: -76px -1px;
+    }
+    #logo .lt .lta {
+        width: 19px;
+        left: 79px;
+        background-position: -90px -1px;
+    }
+    #logo .lt .ltn {
+        width: 14px;
+        left: 102px;
+        background-position: -111px -1px;
+    }
+    #logo .lt .ltd {
+        width: 15px;
+        left: 120px;
+        background-position: -127px -1px;
+    }
+    #logo .lt .lts {
+        bottom: 0;
+        left: 0;
+        width: 105px;
+        height: 1px;
+        background: #E72B37;
+    }
+
+
+
+    /* description */
+
+    #logo .ld {
+        width: 151px;
+        height: 30px;
+        bottom: 8px;
+        left: 0;
+        overflow: hidden;
+    }
+    #logo .ld .ldt {
+        bottom: 0;
+        left: 12px;
+        width: 128px;
+        height: 22px;
+        background: url("logo-sprite.png") -1px -42px no-repeat;
+    }
+
+
+
+    /* rnc */
+
+    #logo .lr {
+        top: 46px;
+        left: 116px;
+        width: 26px;
+        height: 8px;
+        background: url("logo-sprite.png") -1px -66px no-repeat;
+    }
+
+
+
+    /* ---------------
+       2. Animations
+       --------------- */
+
+
+    /* global */
+
+    #logo div {
+        -webkit-animation-fill-mode: both !important;
+        animation-fill-mode: both !important;
+    }
+
+
+
+    /* border */
+
+    #logo .lb {
+        -webkit-animation: lb 2s ease;
+        animation: lb 2s ease;
+    }
+
+
+    @-webkit-keyframes lb {
+        from {
+            width: 59px;
+            height: 59px;
+            opacity: 0;
+            -webkit-transform: translate3d(46px, 15px, 0) rotateZ(0deg) scale(0);
+            transform: translate3d(46px, 15px, 0) rotateZ(0deg) scale(0);
+        }
+        90% {
+            width: 59px;
+            height: 59px;
+            opacity: 1;
+            -webkit-transform: translate3d(46px, 15px, 0) rotateZ(720deg) scale(1);
+            transform: translate3d(46px, 15px, 0) rotateZ(720deg) scale(1);
+        }
+        to {
+            width: 151px;
+            height: 89px;
+            -webkit-transform: translate3d(0, 0, 0) rotateZ(720deg);
+            transform: translate3d(0, 0, 0) rotateZ(720deg);
+        }
+    }
+    @keyframes lb {
+        from {
+            width: 59px;
+            height: 59px;
+            opacity: 0;
+            -webkit-transform: translate3d(46px, 15px, 0) rotateZ(0deg) scale(0);
+            transform: translate3d(46px, 15px, 0) rotateZ(0deg) scale(0);
+        }
+        90% {
+            width: 59px;
+            height: 59px;
+            opacity: 1;
+            -webkit-transform: translate3d(46px, 15px, 0) rotateZ(720deg) scale(1);
+            transform: translate3d(46px, 15px, 0) rotateZ(720deg) scale(1);
+        }
+        to {
+            width: 151px;
+            height: 89px;
+            -webkit-transform: translate3d(0, 0, 0) rotateZ(720deg) scale(1);
+            transform: translate3d(0, 0, 0) rotateZ(720deg) scale(1);
+        }
+    }
+    #logo .lb .lbl {
+        -webkit-animation: lbl 1.6s 3.4s ease;
+        animation: lbl 1.6s 3.4s ease;
+    }
+    @-webkit-keyframes lbl {
+        from {
+            top: -18px;
+        }
+        25% {
+            top: -83px;
+        }
+        25.001% {
+            top: 95px;
+        }
+        50% {
+            top: 36px;
+        }
+        75% {
+            top: 6px;
+        }
+        to {
+            top: -18px;
+        }
+    }
+    @keyframes lbl {
+        from {
+            top: -18px;
+        }
+        25% {
+            top: -83px;
+        }
+        25.001% {
+            top: 95px;
+        }
+        50% {
+            top: 36px;
+        }
+        75% {
+            top: 6px;
+        }
+        to {
+            top: -18px;
+        }
+    }
+    #logo .lb .lbt {
+        -webkit-animation: lbt 1.6s 3.4s ease;
+        animation: lbt 1.6s 3.4s ease;
+    }
+    @-webkit-keyframes lbt {
+        from {
+            left: -70px;
+        }
+        25% {
+            left: 6px;
+        }
+        50% {
+            left: 80px;
+        }
+        75% {
+            left: 157px;
+        }
+        75.001% {
+            left: -145px;
+        }
+        to {
+            left: -70px;
+        }
+    }
+    @keyframes lbt {
+        from {
+            left: -70px;
+        }
+        25% {
+            left: 6px;
+        }
+        50% {
+            left: 80px;
+        }
+        75% {
+            left: 157px;
+        }
+        75.001% {
+            left: -145px;
+        }
+        to {
+            left: -70px;
+        }
+    }
+    #logo .lb .lbr {
+        -webkit-animation: lbr 1.6s 3.4s ease;
+        animation: lbr 1.6s 3.4s ease;
+    }
+    @-webkit-keyframes lbr {
+        from {
+            bottom: -18px;
+        }
+        25% {
+            bottom: -83px;
+        }
+        25.001% {
+            bottom: 95px;
+        }
+        50% {
+            bottom: 36px;
+        }
+        75% {
+            bottom: 6px;
+        }
+        to {
+            bottom: -18px;
+        }
+    }
+    @keyframes lbr {
+        from {
+            bottom: -18px;
+        }
+        25% {
+            bottom: -83px;
+        }
+        25.001% {
+            bottom: 95px;
+        }
+        50% {
+            bottom: 36px;
+        }
+        75% {
+            bottom: 6px;
+        }
+        to {
+            bottom: -18px;
+        }
+    }
+    #logo .lb .lbb {
+        -webkit-animation: lbb 1.6s 3.4s ease;
+        animation: lbb 1.6s 3.4s ease;
+    }
+    @keyframes lbb {
+        from {
+            right: -70px;
+        }
+        25% {
+            right: 6px;
+        }
+        50% {
+            right: 80px;
+        }
+        75% {
+            right: 157px;
+        }
+        75.001% {
+            right: -145px;
+        }
+        to {
+            right: -70px;
+        }
+    }
+    @-webkit-keyframes lbb {
+        from {
+            right: -70px;
+        }
+        25% {
+            right: 6px;
+        }
+        50% {
+            right: 80px;
+        }
+        75% {
+            right: 157px;
+        }
+        75.001% {
+            right: -145px;
+        }
+        to {
+            right: -70px;
+        }
+    }
+
+
+
+    /* title */
+
+    #logo .lt {
+        -webkit-animation: lt 0.2s 3.5s ease;
+        animation: lt 0.2s 3.5s ease;
+    }
+    @-webkit-keyframes lt {
+        from {
+            -webkit-transform: translate3d(0, 21px, 0);
+            transform: translate3d(0, 21px, 0);
+        }
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    @keyframes lt {
+        from {
+            -webkit-transform: translate3d(0, 21px, 0);
+            transform: translate3d(0, 21px, 0);
+        }
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    #logo .lt .lto,
+    #logo .lt .ltv,
+    #logo .lt .lte,
+    #logo .lt .ltr,
+    #logo .lt .ltl,
+    #logo .lt .lta,
+    #logo .lt .ltn,
+    #logo .lt .ltd {
+        -webkit-animation: ltc 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation: ltc 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    }
+    @-webkit-keyframes ltc {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, 30px, 0);
+            transform: translate3d(0, 30px, 0);
+        }
+        40% {
+            opacity: 1;
+            -webkit-transform: translate3d(0, -12px, 0);
+            transform: translate3d(0, -12px, 0);
+        }
+        62% {
+            -webkit-transform: translate3d(0, 6px, 0);
+            transform: translate3d(0, 6px, 0);
+        }
+        85% {
+            -webkit-transform: translate3d(0, -3px, 0);
+            transform: translate3d(0, -3px, 0);
+        }
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    @keyframes ltc {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, 30px, 0);
+            transform: translate3d(0, 30px, 0);
+        }
+        40% {
+            opacity: 1;
+            -webkit-transform: translate3d(0, -12px, 0);
+            transform: translate3d(0, -12px, 0);
+        }
+        62% {
+            -webkit-transform: translate3d(0, 6px, 0);
+            transform: translate3d(0, 6px, 0);
+        }
+        85% {
+            -webkit-transform: translate3d(0, -3px, 0);
+            transform: translate3d(0, -3px, 0);
+        }
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    #logo .lt .lto {
+        -webkit-animation-delay: 2s;
+        animation-delay: 2s;
+    }
+    #logo .lt .ltv {
+        -webkit-animation-delay: 2.1s;
+        animation-delay: 2.1s;
+    }
+    #logo .lt .lte {
+        -webkit-animation-delay: 2.2s;
+        animation-delay: 2.2s;
+    }
+    #logo .lt .ltr {
+        -webkit-animation-delay: 2.3s;
+        animation-delay: 2.3s;
+    }
+    #logo .lt .ltl {
+        -webkit-animation-delay: 2.4s;
+        animation-delay: 2.4s;
+    }
+    #logo .lt .lta {
+        -webkit-animation-delay: 2.5s;
+        animation-delay: 2.5s;
+    }
+    #logo .lt .ltn {
+        -webkit-animation-delay: 2.6s;
+        animation-delay: 2.6s;
+    }
+    #logo .lt .ltd {
+        -webkit-animation-delay: 2.7s;
+        animation-delay: 2.7s;
+    }
+    #logo .lt .lts {
+        -webkit-animation: lts 0.2s 3.2s ease-out, lts2 0.2s 4.2s ease;
+        animation: lts 0.2s 3.2s ease-out, lts2 0.2s 4.2s ease;
+    }
+    @-webkit-keyframes lts {
+        from {
+            -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+        }
+        to {
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+    }
+    @keyframes lts {
+        from {
+            -webkit-transform: scaleX(0);
+            transform: scaleX(0);
+        }
+        to {
+            -webkit-transform: scaleX(1);
+            transform: scaleX(1);
+        }
+    }
+    @-webkit-keyframes lts2 {
+        from {
+            width: 135px;
+        }
+        to {
+            width: 105px;
+        }
+    }
+    @keyframes lts2 {
+        from {
+            width: 135px;
+        }
+        to {
+            width: 105px;
+        }
+    }
+
+
+
+    /* description */
+
+    #logo .ld {
+        -webkit-animation: ld 0.2s 3.5s ease;
+        animation: ld 0.2s 3.5s ease;
+    }
+    @-webkit-keyframes ld {
+        from {
+            opacity: 0;
+            height: 0;
+            -webkit-transform: translateY(-9px);
+            transform: translateY(-9px);
+        }
+        to {
+            opacity: 1;
+            height: 30px;
+            -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+        }
+    }
+    @keyframes ld {
+        from {
+            opacity: 0;
+            height: 0;
+            -webkit-transform: translateY(-9px);
+            transform: translateY(-9px);
+        }
+        to {
+            opacity: 1;
+            height: 30px;
+            -webkit-transform: translateY(0px);
+            transform: translateY(0px);
+        }
+    }
+    #logo .ld .ldt {
+        -webkit-animation: ldt 0.8s 3.7s ease;
+        animation: ldt 0.8s 3.7s ease;
+    }
+    @-webkit-keyframes ldt {
+        from {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            -webkit-transform: scale3d(1.125, 0.875, 1);
+            transform: scale3d(1.125, 0.875, 1);
+        }
+        40% {
+            -webkit-transform: scale3d(0.875, 1.125, 1);
+            transform: scale3d(0.875, 1.125, 1);
+        }
+        50% {
+            -webkit-transform: scale3d(1.075, 0.925, 1);
+            transform: scale3d(1.075, 0.925, 1);
+        }
+        65% {
+            -webkit-transform: scale3d(0.975, 1.025, 1);
+            transform: scale3d(0.975, 1.025, 1);
+        }
+        75% {
+            -webkit-transform: scale3d(1.025, 0.975, 1);
+            transform: scale3d(1.025, 0.975, 1);
+        }
+        to {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    @keyframes ldt {
+        from {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            -webkit-transform: scale3d(1.125, 0.875, 1);
+            transform: scale3d(1.125, 0.875, 1);
+        }
+        40% {
+            -webkit-transform: scale3d(0.875, 1.125, 1);
+            transform: scale3d(0.875, 1.125, 1);
+        }
+        50% {
+            -webkit-transform: scale3d(1.075, 0.925, 1);
+            transform: scale3d(1.075, 0.925, 1);
+        }
+        65% {
+            -webkit-transform: scale3d(0.975, 1.025, 1);
+            transform: scale3d(0.975, 1.025, 1);
+        }
+        75% {
+            -webkit-transform: scale3d(1.025, 0.975, 1);
+            transform: scale3d(1.025, 0.975, 1);
+        }
+        to {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+
+
+
+    /* rnc */
+
+    #logo .lr {
+        -webkit-animation: lr 0.8s 4.4s ease;
+        animation: lr 0.8s 4.4s ease;
+    }
+    @-webkit-keyframes lr {
+        from {
+            opacity: 0;
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+        }
+        40% {
+            opacity: 1;
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -40deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, -40deg);
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+        }
+        60% {
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
+        }
+        80% {
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
+        }
+        to {
+            -webkit-transform: perspective(400px);
+            transform: perspective(400px);
+        }
+    }
+    @keyframes lr {
+        from {
+            opacity: 0;
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+        }
+        40% {
+            opacity: 1;
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -40deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, -40deg);
+            -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+        }
+        60% {
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, 20deg);
+        }
+        80% {
+            -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
+            transform: perspective(400px) rotate3d(0, 1, 0, -10deg);
+        }
+        to {
+            -webkit-transform: perspective(400px);
+            transform: perspective(400px);
+        }
+    }
+
+</style>
+
+<div id="logo">
+    <div class="lb">
+        <div class="lbl"></div>
+        <div class="lbt"></div>
+        <div class="lbb"></div>
+        <div class="lbr"></div>
+    </div>
+    <div class="lt">
+        <div class="lto"></div>
+        <div class="ltv"></div>
+        <div class="lte"></div>
+        <div class="ltr"></div>
+        <div class="ltl"></div>
+        <div class="lta"></div>
+        <div class="ltn"></div>
+        <div class="ltd"></div>
+        <div class="lts"></div>
+    </div>
+    <div class="ld">
+        <div class="ldt"></div>
+    </div>
+    <div class="lr"></div>
+</div>
+
+<a href="javascript:window.location.reload();">refresh</a>
+
+</body>
+</html>

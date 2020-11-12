@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>3d text animation</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #FFF;
+            /*background-image: -webkit-linear-gradient(top, #464646, #1E1E1E);*/
+            /*background-image:    -moz-linear-gradient(top, #464646, #1E1E1E);*/
+            /*background-image:     -ms-linear-gradient(top, #464646, #1E1E1E);*/
+            /*background-image:         linear-gradient(top, #464646, #1E1E1E);*/
+        }
+        div {
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+        #container {
+            height: 460px;
+            top: 50%; left: 50%;
+            margin-top: -230px;
+            margin-left: -230px;
+            width: 460px;
+            perspective: 700px;
+        }
+        #spin {
+            top: -120px; left: 0;
+            height: 100%; width: 100%;
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            from {transform:translateZ(-2000px) rotateX(0deg) rotateY(60deg); opacity:0;}
+            20%  {transform:translateZ(0px) rotateX(-10deg) rotateY(-60deg); opacity:1;}
+            60%  {transform:translateZ(-250px) rotateX(-13deg) rotateY(320deg);}
+            68%  {transform:translateZ(0px) rotateX(20deg) rotateY(380deg);}
+            to   {transform:translateZ(100px) rotateX(30deg) rotateY(400deg);}
+        }
+        #letters {
+            top: 300px;
+            left: 14px;
+            width: 432px;
+            height: 100px;
+        }
+        #shadow {
+            top: 0; left: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            background: -webkit-radial-gradient(contain, rgba(200,200,200,1), rgba(200,200,200,0));
+            background: -moz-radial-gradient(contain, rgba(200,200,200,1), rgba(200,200,200,0));
+            transform:rotateX(90deg) translateZ(-230px);
+            animation: shadow 10s linear infinite;
+        }
+        @keyframes shadow {
+            from {opacity:1;}
+            20%  {opacity:1;}
+            60%  {opacity:0;}
+            68%  {opacity:1;}
+            90%  {opacity:0;}
+            to   {opacity:0;}
+        }
+
+        .plane {height:100%; width:100%;}
+
+        .p1 {transform:translateZ( 6px); background:#D3D3D3;}
+        .p2 {transform:translateZ(-6px); background:#494949;}
+        .p3 {transform:rotateY(90deg) translateZ(-6px); background:#8E8E8E;}
+        .p4 {transform:rotateY(90deg) translateZ( 6px); background:#8E8E8E;}
+
+        .p1 div {bottom:100%; transform:rotateX(90deg); transform-origin:100% 100%; height:12px; width:100%; background:#F6F6F6;}
+        .p2 div {top:100%;    transform:rotateX(90deg); transform-origin:0 0;       height:12px; width:100%; background:#0F0F0F;}
+
+        #j1 .p1, #s2 .p1, #s4 .p1 {background:#C7000A;}
+        #j1 .p2, #s2 .p2, #s4 .p2  {background:#510005;}
+        #j1 .p3, #s2 .p3, #s4 .p3  {background:#96000A;}
+        #j1 .p4, #s2 .p4, #s4 .p4  {background:#96000A;}
+        #j1 .p1 div, #s2 .p1 div, #s4 .p1 div {background:#FF0010;}
+        #j1 .p2 div, #s2 .p2 div, #s4 .p2 div {background:#2D0000;}
+
+        #j2 .p1, #s1 .p1, #s3 .p1, #s5 .p1 {background:#C7000A;}
+        #j2 .p2, #s1 .p2, #s3 .p2, #s5 .p2 {background:#510005;}
+        #j2 .p3, #s1 .p3, #s3 .p3, #s5 .p3 {background:#FF0010;}
+        #j2 .p4, #s1 .p4, #s3 .p4, #s5 .p4 {background:#2D0000;}
+        #j2 .p1 div, #s1 .p1 div, #s3 .p1 div, #s5 .p1 div {background:#96000A;}
+        #j2 .p2 div, #s1 .p2 div, #s3 .p2 div, #s5 .p2 div {background:#96000A;}
+
+        #d3 .p3, #d4 .p3, #o3 .p3, #o4 .p3, #t2 .p3, #t3 .p3 {background:#F6F6F6;}
+        #d3 .p4, #d4 .p4, #o3 .p4, #o4 .p4, #t2 .p4, #t3 .p4 {background:#0F0F0F;}
+        #d3 .p1 div, #d4 .p1 div, #o3 .p1 div, #o4 .p1 div, #t2 .p1 div, #t3 .p1 div {background:#8E8E8E;}
+        #d3 .p2 div, #d4 .p2 div, #o3 .p2 div, #o4 .p2 div, #t2 .p2 div, #t3 .p2 div {background:#8E8E8E;}
+
+        #j {
+            top: 22px;
+            left: 1px;
+            height: 78px;
+            width: 67px;
+        }
+        #j1 {
+            right: 0;
+            top: 0;
+            height: 63px;
+            width: 12px;
+            animation: j1 10s ease-in-out infinite;
+        }
+        @keyframes j1 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%  {transform:translateZ(100px) translateY(-50px) rotateX(240deg) rotateZ(30deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            80%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            90%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+        }
+        #j2 {
+            left: -12px;
+            bottom: 0;
+            height: 67px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: j2 10s ease-in-out infinite;
+        }
+        @keyframes j2 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%   {transform:translateZ(150px) translateY(-20px) rotateX(-180deg) rotateZ(30deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            80.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            90.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #s {
+            top: 22px;
+            left: 80px;
+            height: 56px;
+            width: 67px;
+        }
+        #s1 {
+            bottom: 44px;
+            left: -12px;
+            height: 67px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: s1 10s ease-in-out infinite;
+        }
+        @keyframes s1 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%   {transform:translateZ(120px) translateY(-10px) rotateX(270deg) rotateZ(120deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            81%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            91%   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #s2 {
+            top: 15px;
+            left: 0;
+            height: 4px;
+            width: 12px;
+            animation: s2 10s ease-in-out infinite;
+        }
+        @keyframes s2 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(210px) translateY(-30px) rotateX(60deg) rotateZ(60deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            81.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            91.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+
+        }
+        #s3 {
+            bottom: 22px;
+            left: -12px;
+            height: 67px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: s3 10s ease-in-out infinite;
+        }
+        @keyframes s3 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%  {transform:translateZ(120px) translateY(0px) rotateX(60deg) rotateZ(180deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            82%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            92%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+
+        }
+        #s4 {
+            top: 37px;
+            right: 0;
+            height: 4px;
+            width: 12px;
+            animation: s4 10s ease-in-out infinite;
+        }
+        @keyframes s4 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(90px) translateY(0px) rotateX(20deg) rotateZ(-60deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            82.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            92.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+
+        }
+        #s5 {
+            bottom: 0;
+            left: -12px;
+            height: 67px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: s5 10s ease-in-out infinite;
+        }
+        @keyframes s5 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%  {transform:translateZ(210px) translateY(-30px) rotateX(60deg) rotateZ(60deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            83%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            93%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #d {
+            top: 0;
+            left: 159px;
+            height: 78px;
+            width: 68px;
+        }
+        #d1 {
+            height: 78px;
+            width: 12px;
+            right: 0;
+            top: 0;
+            animation: d1 10s ease-in-out infinite;
+        }
+        @keyframes d1 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(180px) translateY(-50px) rotateX(240deg) rotateZ(20deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            83.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            93.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+        }
+        #d2 {
+            height: 56px;
+            width: 12px;
+            top: 22px;
+            animation: d2 10s ease-in-out infinite;
+        }
+        @keyframes d2 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%  {transform:translateZ(140px) translateY(-30px) rotateX(-90deg) rotateZ(30deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            84%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            94%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+        }
+        #d3 {
+            bottom: 0;
+            left: 3px;
+            height: 38px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: d3 10s ease-in-out infinite;
+        }
+        @keyframes d3 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%   {transform:translateZ(180px) translateY(0px) rotateX(-90deg) rotateZ(0deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            84.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            94.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+
+        }
+        #d4 {
+            bottom: 44px;
+            left: 3px;
+            height: 38px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: d4 10s ease-in-out infinite;
+        }
+        @keyframes d4 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%  {transform:translateZ(100px) translateY(0px) rotateX(360deg) rotateZ(120deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            85%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            95%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #o {
+            left: 238px;
+            top: 22px;
+            height: 56px;
+            width: 68px;
+        }
+        #o1 {
+            left: 0;
+            top: 15px;
+            height: 41px;
+            width: 12px;
+            animation: o1 10s ease-in-out infinite;
+        }
+        @keyframes o1 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(200px) translateY(30px) rotateX(120deg) rotateZ(120deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            85.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            95.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+
+        }
+        #o2 {
+            right: 0;
+            top: 0;
+            height: 41px;
+            width: 12px;
+            animation: o2 10s ease-in-out infinite;
+        }
+        @keyframes o2 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%  {transform:translateZ(180px) translateY(-70px) rotateX(-30deg) rotateZ(-180deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            86%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            96%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+
+        }
+        #o3 {
+            left: 3px;
+            bottom: 0;
+            height: 53px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: o3 10s ease-in-out infinite;
+        }
+        @keyframes o3 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%   {transform:translateZ(180px) translateY(-80px) rotateX(-240deg) rotateZ(60deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            86.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            96.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+
+        }
+        #o4 {
+            left: -12px;
+            top: -40px;
+            height: 52px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: o4 10s ease-in-out infinite;
+        }
+        @keyframes o4 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%  {transform:translateZ(120px) translateY(-70px) rotateX(-200deg) rotateZ(-10deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            87%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            97%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #dot {
+            left: 318px;
+            top: 66px;
+            height: 12px;
+            width: 12px;
+            animation: dot 10s ease-in-out infinite;
+        }
+        @keyframes dot {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(120px) translateY(-10px) rotateX(360deg) rotateZ(180deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            87.5% {transform:translateZ(0px) rotateY(0deg) rotateX(0deg); opacity:1;}
+            97.5% {transform:translateZ(-2000px) rotateY(0deg) rotateX(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) rotateY(0deg) rotateX(0deg); opacity:0;}
+        }
+        #i {
+            left: 342px;
+            top: 22px;
+            height: 56px;
+            width: 12px;
+            animation: i 10s ease-in-out infinite;
+        }
+        @keyframes i {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%  {transform:translateZ(200px) translateY(-10px) rotateX(240deg) rotateZ(30deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            88%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity: 1;}
+            98%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity: 0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity: 0;}
+        }
+        #t {
+            height: 78px;
+            width: 68px;
+            left: 366px;
+            top: 0;
+        }
+        #t1 {
+            top: 0;
+            left: 0;
+            height: 78px;
+            width: 12px;
+            animation: t1 10s ease-in-out infinite;
+        }
+        @keyframes t1 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            40%   {transform:translateZ(210px) translateY(-30px) rotateX(-60deg) rotateZ(-30deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg);}
+            88.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:1;}
+            98.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(0deg); opacity:0;}
+
+        }
+        #t2 {
+            left: 3px;
+            bottom: 0;
+            height: 50px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: t2 10s ease-in-out infinite;
+        }
+        @keyframes t2 {
+            from {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%  {transform:translateZ(170px) translateY(-10px) rotateX(-260deg) rotateZ(60deg);}
+            60%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            89%  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            99%  {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to   {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+        }
+        #t3 {
+            left: 3px;
+            bottom: 44px;
+            height: 50px;
+            width: 12px;
+            transform: rotateZ(90deg);
+            transform-origin: 100% 100%;
+            animation: t3 10s ease-in-out infinite;
+        }
+        @keyframes t3 {
+            from  {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            20%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            40%   {transform:translateZ(150px) translateY(-10px) rotateX(-200deg) rotateZ(180deg);}
+            60%   {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg);}
+            89.5% {transform:translateZ(0px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:1;}
+            99.5% {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+            to    {transform:translateZ(-2000px) translateY(0px) rotateX(0deg) rotateZ(90deg); opacity:0;}
+
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="spin">
+            <div id="letters">
+                <div id="j">
+                    <div id="j1">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="j2">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                </div>
+                <div id="s">
+                    <div id="s1">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="s2">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="s3">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="s4">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="s5">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                </div>
+                <div id="d">
+                    <div id="d1">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="d2">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="d3">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="d4">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                </div>
+                <div id="o">
+                    <div id="o1">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="o2">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="o3">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="o4">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                </div>
+                <div id="dot">
+                    <div class="plane p1"><div></div></div>
+                    <div class="plane p2"><div></div></div>
+                    <div class="plane p3"></div>
+                    <div class="plane p4"></div>
+                </div>
+                <div id="i">
+                    <div class="plane p1"><div></div></div>
+                    <div class="plane p2"><div></div></div>
+                    <div class="plane p3"></div>
+                    <div class="plane p4"></div>
+                </div>
+                <div id="t">
+                    <div id="t1">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="t2">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                    <div id="t3">
+                        <div class="plane p1"><div></div></div>
+                        <div class="plane p2"><div></div></div>
+                        <div class="plane p3"></div>
+                        <div class="plane p4"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="shadow"></div>
+        </div>
+    </div>
+</body>
+</html>

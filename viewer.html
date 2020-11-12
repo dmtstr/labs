@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Viewer</title>
+    <style>
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            position: relative;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #2D2739;
+            overflow: hidden;
+        }
+        #viewer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            perspective: 500px;
+            overflow: hidden;
+        }
+        #viewer .spin {
+            position: absolute;
+            transform-style: preserve-3d;
+            z-index: 1;
+        }
+        #viewer canvas {
+            display: block;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 0;
+        }
+        #viewer a {
+            float: left;
+            transform-style: preserve-3d;
+            box-sizing: border-box;
+        }
+        #viewer a span {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding: 2px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            overflow: hidden;
+        }
+        #viewer a img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #viewer a:hover span {
+            border-color: rgba(233,30,99,0.8);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="viewer">
+
+
+
+        <!--
+            Items
+        -->
+
+        <div class="spin">
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer1.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer2.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer3.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer4.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer5.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer6.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer7.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer8.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer9.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer10.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer11.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer12.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer13.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer14.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer15.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer16.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer17.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer18.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer19.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer20.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer21.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer22.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer23.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer24.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer25.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer26.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer27.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer28.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer29.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer30.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer31.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer32.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer33.jpg">
+                </span>
+            </a>
+            <a>
+                <span>
+                    <img src="http://karpovsystems.com/storage/viewer34.jpg">
+                </span>
+            </a>
+        </div>
+
+
+
+        <!--
+            Background
+        -->
+
+        <canvas></canvas>
+
+    </div>
+
+    <script>
+
+        (function(window, document, Math) {
+
+            // --------------------
+            // Variables
+            // --------------------
+
+            // elements
+            var $viewer,
+                $spin,
+                $items,
+                $canvas;
+
+            // labs
+            var cell,
+                size,
+                distance = {},
+                offset = {},
+                current = {},
+                origin = {},
+                speed = {
+                    a: 0.96,
+                    l: 0.99
+                };
+
+            // canvas
+            var ctx,
+                frame,
+                data = new Array(1000),
+                planes = 1000,
+                zoom = 600,
+                radius = 2,
+                center = {},
+                width,
+                height;
+
+
+
+            // --------------------
+            // Utils
+            // --------------------
+
+            function find(x) {
+                if (x < cell * 2) return 0.99 + x / cell / 2 * 0.01;
+                else if (x > cell * 6) return 0.99 + (1 - (x - cell * 6) / cell / 2) * 0.01;
+                else return 1;
+            }
+
+            function Dot() {
+                this.x = Math.random() * width - $canvas.width *  $canvas.width / convert($canvas.width, planes);
+                this.y = Math.random() * height - height / 2;
+                this.z = Math.random() * planes;
+                this.o = this.x;
+            }
+
+            function convert(n, z) {
+                return n / (z / zoom + 1);
+            }
+
+            function rotation(p, x, y) {
+                return {
+                    x: Math.cos(x) * p.x + Math.sin(x) * p.z,
+                    y: Math.sin(y) * Math.sin(x) * p.x + Math.cos(y) * p.y - Math.sin(y) * Math.cos(x) * p.z,
+                    z: -Math.cos(y) * Math.sin(x) * p.x + Math.sin(y) * p.y + Math.cos(y) * Math.cos(x) * p.z
+                }
+            }
+
+            function angle(value) {
+                return {
+                    x: -value + origin.x / $canvas.width * value * 2,
+                    y: -value + origin.y / $canvas.height * value * 2
+                }
+            }
+
+            function max(value) {
+                return value *  value / convert(value, planes);
+            }
+
+
+
+            // --------------------
+            // Animation
+            // --------------------
+
+            function canvas() {
+                ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+                var rad = angle(-Math.PI / 24);
+                for (var i = 0; i < data.length; i++) {
+                    var P = rotation(data[i], rad.x, rad.y);
+                    var r = convert(radius, P.z);
+                    ctx.fillRect(center.x + convert(P.x, P.z), center.y + convert(P.y, P.z), r, r);
+                    data[i].x = data[i].o + origin.l / 2;
+                }
+            }
+
+            function labs() {
+                var deg = angle(15);
+                $spin.style.transformOrigin = -origin.l + cell * 2 + 'px 50%';
+                $spin.style.transform = 'translateX(' + origin.l + 'px) rotateX(' + deg.y + 'deg) rotateY(' + deg.x + 'deg)';
+            }
+
+            function change() {
+                offset.x *= speed.a;
+                offset.y *= speed.a;
+                offset.l *= speed.l;
+                origin.y = current.y + distance.y - offset.y;
+                origin.x = current.x + distance.x - offset.x;
+                origin.l = current.l + distance.l - offset.l;
+            }
+
+            function animate() {
+                change();
+                labs();
+                canvas();
+                frame = requestAnimationFrame(animate);
+            }
+
+
+
+            // --------------------
+            // Listeners
+            // --------------------
+
+            function translate(event) {
+                var left = distance.l < 0 && event.pageX < cell * 2;
+                var right = distance.l >= 0 && event.pageX > cell * 6;
+                if (left) {
+                    distance.l = -origin.l;
+                }
+                if (right) {
+                    distance.l =  -origin.l - cell * (size - 2);
+                }
+                if (left || right) {
+                    current.l = origin.l;
+                    offset.l = distance.l;
+                }
+                speed.l = find(event.pageX);
+            }
+
+            function rotate(event) {
+                distance.x = event.pageX - current.x;
+                distance.y = event.pageY - current.y;
+                offset.x = distance.x;
+                offset.y = distance.y;
+                current.x = origin.x;
+                current.y = origin.y;
+            }
+
+            function move(event) {
+                translate(event);
+                rotate(event);
+            }
+
+            function resize() {
+                update();
+                reset();
+                style();
+                create();
+            }
+
+
+
+            // --------------------
+            // Creation
+            // --------------------
+
+            function reset() {
+                distance = {
+                    x: 0,
+                    y: 0,
+                    l: 0
+                };
+                offset = {
+                    x: 0,
+                    y: 0,
+                    l: 0
+                };
+                current = {
+                    x: $canvas.width / 2,
+                    y: $canvas.height / 2,
+                    l: 0
+                };
+                origin = {
+                    x: $canvas.width / 2,
+                    y: $canvas.height / 2,
+                    l: 0
+                };
+            }
+
+            function update() {
+                $canvas.width = document.body.offsetWidth;
+                $canvas.height = document.body.offsetHeight;
+                center.x = $canvas.width / 2;
+                center.y = $canvas.height / 2;
+                cell = $canvas.width / 8;
+                width = max(cell * 8 + (size - 2) * cell / 2);
+                height =  max($canvas.height);
+            }
+
+            function style() {
+                for (var i = 0; i < $items.length; i++) {
+                    $items[i].style.width = cell + 'px';
+                    $items[i].style.height = cell * 0.66 + 'px';
+                    $items[i].style.padding = cell / 20 + 'px';
+                }
+                $spin.style.width = size * cell + 'px';
+                $spin.style.height = cell * 2 + 'px';
+                $spin.style.left = cell * 3 + 'px';
+                $spin.style.top = ($canvas.height - cell * 2) / 2 + 'px';
+            }
+
+            function create() {
+                for (var i = 0; i < data.length; i++) {
+                    data[i] = new Dot();
+                }
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            }
+
+
+
+            // --------------------
+            // Initialization
+            // --------------------
+
+            function values() {
+                ctx = $canvas.getContext('2d');
+                size = Math.ceil($items.length / 3);
+            }
+
+            function events() {
+                document.addEventListener('mousemove', move, false);
+                window.addEventListener('resize', resize, false);
+            }
+
+            function elements() {
+                $viewer = document.getElementById('viewer');
+                $canvas = $viewer.lastElementChild;
+                $spin = $viewer.firstElementChild;
+                $items = $spin.children;
+            }
+
+            function init() {
+                elements();
+                events();
+                values();
+                update();
+                reset();
+                style();
+                create();
+                animate();
+            }
+
+            document.addEventListener('DOMContentLoaded', init, false);
+
+
+        })(window, document, Math);
+
+
+    </script>
+
+</body>
+</html>

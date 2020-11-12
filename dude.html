@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Dude</title>
+</head>
+<body>
+
+    <style>
+
+        /*----------------
+         common styles
+        ------------------*/
+
+        html, body {height: 100%; width: 100%;}
+        body       {margin: 0; font-size: 0; text-align: center;}
+        body {
+            background: -webkit-radial-gradient(circle, #8BC34A, #33691E);
+            background:    -moz-radial-gradient(circle, #8BC34A, #33691E);
+            background:     -ms-radial-gradient(circle, #8BC34A, #33691E);
+            background:         radial-gradient(circle, #8BC34A, #33691E);
+        }
+        body:after {content: ''; display: inline-block; vertical-align: middle; height: 100%;}
+        .demo      {display: inline-block; vertical-align: middle;}
+
+
+
+        /*----------------
+         navigation
+        ------------------*/
+
+        #nav                {position: relative; margin: 40px auto 0 auto; width: 80px; height: 80px;}
+        #nav a              {display: block; position: absolute; height: 24px; width: 24px; background: #9CCC65; transition: background 0.2s ease;}
+        #nav a:nth-child(1) {left: 0; top: 28px; border-radius: 5px 0 0 5px;}
+        #nav a:nth-child(2) {left: 28px; top: 0; border-radius: 5px 5px 0 0;}
+        #nav a:nth-child(3) {left: 56px; top: 28px; border-radius: 0 5px 5px 0;}
+        #nav a:nth-child(4) {left: 28px; top: 56px; border-radius: 0 0 5px 5px;}
+        #nav a:nth-child(5) {left: 28px; top: 28px;}
+        #nav a.active       {background: #C5E1A5;}
+
+
+
+        /*----------------
+         dude markup
+        ------------------*/
+
+        #dude          {position: relative; margin: 0 auto 0 auto; height: 128px; width: 48px;}
+        #dude div      {position: absolute; background: #000; border-radius: 50%; box-shadow: 0 0 10px #000; transition: transform 0.5s ease;}
+        #dude .body    {left: 20px; top: 40px; height: 48px; width: 8px;}
+        #dude .head    {left: -20px; height: 48px; width: 48px; bottom: 44px; border-radius: 50%;}
+        #dude .arm     {height: 24px; width: 4px; top: 8px; transform-origin: 2px 2px;}
+        #dude .leg     {top: 44px; height: 24px; width: 4px; transform-origin: 2px 2px;}
+        #dude .arm div {top: 20px; width: 4px; height: 24px; transform-origin: 2px 2px;}
+        #dude .leg div {top: 20px; height: 24px; width: 4px; transform-origin: 2px 2px;}
+        #dude .left    {left: 0;}
+        #dude .right   {right: 0;}
+
+
+
+        /*----------------
+         center
+        ------------------*/
+        #dude.center .head {
+            transform: translate(0px);
+        }
+        #dude.center .arm.left      {transform: rotate(20deg);}
+        #dude.center .arm.right     {transform: rotate(-20deg);}
+        #dude.center .arm.left div  {transform: rotate(-20deg);}
+        #dude.center .arm.right div {transform: rotate(20deg);}
+        #dude.center .leg.left      {transform: rotate(10deg);}
+        #dude.center .leg.right     {transform: rotate(-10deg);}
+        #dude.center .leg.left div  {transform: rotate(-10deg);}
+        #dude.center .leg.right div {transform: rotate(10deg);}
+
+        #dude.center.animation .head {
+            animation: centerHead 3s ease-in-out infinite;
+        }
+        @keyframes centerHead {
+            0%   {transform: translate(0px);}
+            25%  {transform: translate(-5px);}
+            75%  {transform: translate(5px);}
+            100% {transform: translate(0px);}
+        }
+        #dude.center.animation .arm.left {
+            animation: centerArmLeft 3s ease-in-out infinite;
+        }
+        @keyframes centerArmLeft {
+            0%   {transform: rotate(20deg);}
+            15%  {transform: rotate(100deg);}
+            35%  {transform: rotate(100deg);}
+            50%  {transform: rotate(20deg);}
+            100% {transform: rotate(20deg);}
+        }
+        #dude.center.animation .arm.left div {
+            animation: centerArmLeftDiv 3s ease-in-out infinite;
+        }
+        @keyframes centerArmLeftDiv {
+            0%   {transform: rotate(-20deg);}
+            15%  {transform: rotate(40deg);}
+            25%  {transform: rotate(20deg);}
+            35%  {transform: rotate(40deg);}
+            50%  {transform: rotate(-20deg);}
+            100% {transform: rotate(-20deg);}
+        }
+        #dude.center.animation .arm.right {
+            animation: centerArmRight 3s ease-in-out infinite;
+        }
+        @keyframes centerArmRight {
+            0%   {transform: rotate(-20deg);}
+            50%  {transform: rotate(-20deg);}
+            65%  {transform: rotate(-100deg);}
+            85%  {transform: rotate(-100deg);}
+            100% {transform: rotate(-20deg);}
+        }
+        #dude.center.animation .arm.right div {
+            animation: centerArmRightDiv 3s ease-in-out infinite;
+        }
+        @keyframes centerArmRightDiv {
+            0%   {transform: rotate(20deg);}
+            50%  {transform: rotate(20deg);}
+            65%  {transform: rotate(-40deg);}
+            75%  {transform: rotate(-20deg);}
+            85%  {transform: rotate(-40deg);}
+            100% {transform: rotate(20deg);}
+        }
+
+
+
+
+        /*----------------
+         right
+        ------------------*/
+
+        #dude.right .head          {transform: translate(8px);}
+        #dude.right .arm.left      {transform: translate(2px) rotate(-30deg);}
+        #dude.right .arm.right     {transform: translate(-2px) rotate(30deg);}
+        #dude.right .arm.left div  {transform: rotate(-10deg);}
+        #dude.right .arm.right div {transform: rotate(-10deg);}
+        #dude.right .leg.left      {transform: translate(2px) rotate(-30deg);}
+        #dude.right .leg.right     {transform: translate(-2px) rotate(15deg);}
+        #dude.right .leg.left div  {transform: rotate(20deg);}
+        #dude.right .leg.right div {transform: rotate(10deg);}
+
+        #dude.right.animation .head {
+            animation: rightHead 0.5s ease-in-out infinite;
+        }
+        @keyframes rightHead {
+            0%   {transform: translate(8px);}
+            50%  {transform: translate(6px);}
+            100% {transform: translate(8px);}
+        }
+        #dude.right.animation .arm.left {
+            animation: rightArmLeft 1s ease-in-out infinite;
+        }
+        @keyframes rightArmLeft {
+            0%   {transform: translate(2px) rotate(-30deg);}
+            50%  {transform: translate(2px) rotate(30deg);}
+            100% {transform: translate(2px) rotate(-30deg);}
+        }
+        #dude.right.animation .arm.right {
+            animation: rightArmRight 1s ease-in-out infinite;
+        }
+        @keyframes rightArmRight {
+            0%   {transform: translate(-2px) rotate(30deg);}
+            50%  {transform: translate(-2px) rotate(-30deg);}
+            100% {transform: translate(-2px) rotate(30deg);}
+        }
+        #dude.right.animation .leg.left {
+            animation: rightLegLeft 1s ease-in-out infinite;
+        }
+        @keyframes rightLegLeft {
+            0%   {transform: translate(2px) rotate(-30deg);}
+            50%  {transform: translate(2px) rotate(15deg);}
+            100% {transform: translate(2px) rotate(-30deg);}
+        }
+        #dude.right.animation .leg.left div {
+            animation: rightLegLeftDiv 1s ease-in-out infinite;
+        }
+        @keyframes rightLegLeftDiv {
+            0%   {transform: rotate(20deg);}
+            50%  {transform: rotate(10deg);}
+            100% {transform: rotate(20deg);}
+        }
+        #dude.right.animation .leg.right {
+            animation: rightLegRight 1s ease-in-out infinite;
+        }
+        @keyframes rightLegRight {
+            0%   {transform: translate(-2px) rotate(15deg);}
+            50%  {transform: translate(-2px) rotate(-30deg);}
+            100% {transform: translate(-2px) rotate(15deg);}
+        }
+        #dude.right.animation .leg.right div {
+            animation: rightLegRightDiv 1s ease-in-out infinite;
+        }
+        @keyframes rightLegRightDiv {
+            0%   {transform: rotate(10deg);}
+            50%  {transform: rotate(20deg);}
+            100% {transform: rotate(10deg);}
+        }
+
+
+
+        /*----------------
+         left
+        ------------------*/
+
+        #dude.left .head          {transform: translate(-8px);}
+        #dude.left .arm.left      {transform: translate(2px) rotate(30deg);}
+        #dude.left .arm.right     {transform: translate(-2px) rotate(-30deg);}
+        #dude.left .arm.left div  {transform: rotate(10deg);}
+        #dude.left .arm.right div {transform: rotate(10deg);}
+        #dude.left .leg.left      {transform: translate(2px) rotate(30deg);}
+        #dude.left .leg.right     {transform: translate(-2px) rotate(-15deg);}
+        #dude.left .leg.left div  {transform: rotate(-20deg);}
+        #dude.left .leg.right div {transform: rotate(-10deg);}
+
+        #dude.left.animation .head {
+            animation: leftHead 0.5s ease-in-out infinite;
+        }
+        @keyframes leftHead {
+            0%   {transform: translate(-8px);}
+            50%  {transform: translate(-6px);}
+            100% {transform: translate(-8px);}
+        }
+        #dude.left.animation .arm.left {
+            animation: leftArmLeft 1s ease-in-out infinite;
+        }
+        @keyframes leftArmLeft {
+            0%   {transform: translate(2px) rotate(30deg);}
+            50%  {transform: translate(2px) rotate(-30deg);}
+            100% {transform: translate(2px) rotate(30deg);}
+        }
+        #dude.left.animation .arm.right {
+            animation: leftArmRight 1s ease-in-out infinite;
+        }
+        @keyframes leftArmRight {
+            0%   {transform: translate(-2px) rotate(-30deg);}
+            50%  {transform: translate(-2px) rotate(30deg);}
+            100% {transform: translate(-2px) rotate(-30deg);}
+        }
+        #dude.left.animation .leg.left {
+            animation: leftLegLeft 1s ease-in-out infinite;
+        }
+        @keyframes leftLegLeft {
+            0%   {transform: translate(2px) rotate(30deg);}
+            50%  {transform: translate(2px) rotate(-15deg);}
+            100% {transform: translate(2px) rotate(30deg);}
+        }
+        #dude.left.animation .leg.left div {
+            animation: leftLegLeftDiv 1s ease-in-out infinite;
+        }
+        @keyframes leftLegLeftDiv {
+            0%   {transform: rotate(-20deg);}
+            50%  {transform: rotate(-10deg);}
+            100% {transform: rotate(-20deg);}
+        }
+        #dude.left.animation .leg.right {
+            animation: leftLegRight 1s ease-in-out infinite;
+        }
+        @keyframes leftLegRight {
+            0%   {transform: translate(-2px) rotate(-15deg);}
+            50%  {transform: translate(-2px) rotate(30deg);}
+            100% {transform: translate(-2px) rotate(-15deg);}
+        }
+        #dude.left.animation .leg.right div {
+            animation: leftLegRightDiv 1s ease-in-out infinite;
+        }
+        @keyframes leftLegRightDiv {
+            0%   {transform: rotate(-10deg);}
+            50%  {transform: rotate(-20deg);}
+            100% {transform: rotate(-10deg);}
+        }
+
+
+
+        /*----------------
+         bottom
+        ------------------*/
+
+        #dude.bottom .body          {transform: translateY(28px);}
+        #dude.bottom .arm.left      {transform: rotate(40deg);}
+        #dude.bottom .arm.right     {transform: rotate(-40deg);}
+        #dude.bottom .arm.left div  {transform: rotate(-10deg);}
+        #dude.bottom .arm.right div {transform: rotate(10deg);}
+        #dude.bottom .leg.left      {transform: rotate(75deg);}
+        #dude.bottom .leg.right     {transform: rotate(-75deg);}
+        #dude.bottom .leg.left div  {transform: rotate(-10deg);}
+        #dude.bottom .leg.right div {transform: rotate(10deg);}
+
+        #dude.bottom .head {
+            animation: bottomHead 4s ease-in-out infinite;
+        }
+        @keyframes bottomHead {
+            0%   {transform: translate(0px);}
+            20%  {transform: translate(-10px);}
+            25%  {transform: translate(-10px);}
+            45%  {transform: translate(-10px);}
+            65%  {transform: translate(10px);}
+            70%  {transform: translate(10px);}
+            100% {transform: translate(0px);}
+        }
+        #dude.bottom.animation .arm.left {
+            animation: bottomArmLeft 4s ease-in-out infinite;
+        }
+        @keyframes bottomArmLeft {
+            0%   {transform: rotate(40deg);}
+            20%  {transform: rotate(32deg);}
+            25%  {transform: rotate(32deg);}
+            45%  {transform: rotate(40deg);}
+            65%  {transform: rotate(-28deg);}
+            70%  {transform: rotate(-28deg);}
+            100% {transform: rotate(40deg);}
+        }
+        #dude.bottom.animation .arm.right {
+            animation: bottomArmRight 4s ease-in-out infinite;
+        }
+        @keyframes bottomArmRight {
+            0%   {transform: rotate(-40deg);}
+            20%  {transform: rotate(28deg);}
+            25%  {transform: rotate(28deg);}
+            45%  {transform: rotate(-40deg);}
+            65%  {transform: rotate(-32deg);}
+            70%  {transform: rotate(-32deg);}
+            100% {transform: rotate(-40deg);}
+        }
+        #dude.bottom.animation .arm.left div {
+            animation: bottomArmLeftDiv 4s ease-in-out infinite;
+        }
+        @keyframes bottomArmLeftDiv {
+            0%   {transform: rotate(-10deg);}
+            20%  {transform: rotate(0deg);}
+            25%  {transform: rotate(0deg);}
+            45%  {transform: rotate(-10deg);}
+            65%  {transform: rotate(0deg);}
+            70%  {transform: rotate(0deg);}
+            100% {transform: rotate(-10deg);}
+        }
+        #dude.bottom.animation .arm.right div {
+            animation: bottomArmRightDiv 4s ease-in-out infinite;
+        }
+        @keyframes bottomArmRightDiv {
+            0%   {transform: rotate(10deg);}
+            20%  {transform: rotate(0deg);}
+            25%  {transform: rotate(0deg);}
+            45%  {transform: rotate(10deg);}
+            65%  {transform: rotate(0deg);}
+            70%  {transform: rotate(0deg);}
+            100% {transform: rotate(10deg);}
+        }
+
+
+
+        /*----------------
+         top
+        ------------------*/
+
+        #dude.top .body          {transform: translateY(0px);}
+        #dude.top .arm.left      {transform: rotate(110deg);}
+        #dude.top .arm.right     {transform: rotate(-110deg);}
+        #dude.top .arm.left div  {transform: rotate(30deg);}
+        #dude.top .arm.right div {transform: rotate(-30deg);}
+        #dude.top .leg.left      {transform: rotate(5deg);}
+        #dude.top .leg.right     {transform: rotate(-5deg);}
+        #dude.top .leg.left div  {transform: rotate(-5deg);}
+        #dude.top .leg.right div {transform: rotate(5deg);}
+
+        #dude.top.animation .body {
+            animation: topBody 2s ease-in-out infinite;
+        }
+        @keyframes topBody {
+            0%   {transform: translateY(0px);}
+            35%  {transform: translateY(6px);}
+            60%  {transform: translateY(-20px);}
+            85%  {transform: translateY(2px);}
+            100% {transform: translateY(0px);}
+        }
+        #dude.top.animation .arm.left {
+            animation: topArmLeft 2s ease-in-out infinite;
+        }
+        @keyframes topArmLeft {
+            0%   {transform: rotate(110deg);}
+            35%  {transform: rotate(30deg);}
+            60%  {transform: rotate(110deg);}
+            85%  {transform: rotate(100deg);}
+            100% {transform: rotate(110deg);}
+        }
+        #dude.top.animation .arm.right {
+            animation: topArmRight 2s ease-in-out infinite;
+        }
+        @keyframes topArmRight {
+            0%   {transform: rotate(-110deg);}
+            35%  {transform: rotate(-30deg);}
+            60%  {transform: rotate(-110deg);}
+            85%  {transform: rotate(-100deg);}
+            100% {transform: rotate(-110deg);}
+        }
+        #dude.top.animation .arm.left div {
+            animation: topArmLeftDiv 2s ease-in-out infinite;
+        }
+        @keyframes topArmLeftDiv {
+            0%   {transform: rotate(30deg);}
+            35%  {transform: rotate(-20deg);}
+            60%  {transform: rotate(30deg);}
+            85%  {transform: rotate(20deg);}
+            100% {transform: rotate(30deg);}
+        }
+        #dude.top.animation .arm.right div {
+            animation: topArmRightDiv 2s ease-in-out infinite;
+        }
+        @keyframes topArmRightDiv {
+            0%   {transform: rotate(-30deg);}
+            35%  {transform: rotate(20deg);}
+            60%  {transform: rotate(-30deg);}
+            85%  {transform: rotate(-20deg);}
+            100% {transform: rotate(-30deg);}
+        }
+        #dude.top.animation .leg.left {
+            animation: topLegLeft 2s ease-in-out infinite;
+        }
+        @keyframes topLegLeft {
+            0%   {transform: rotate(5deg);}
+            35%  {transform: rotate(40deg);}
+            60%  {transform: rotate(-5deg);}
+            100% {transform: rotate(5deg);}
+        }
+        #dude.top.animation .leg.right {
+            animation: topLegRight 2s ease-in-out infinite;
+        }
+        @keyframes topLegRight {
+            0%   {transform: rotate(-5deg);}
+            35%  {transform: rotate(-40deg);}
+            60%  {transform: rotate(-5deg);}
+            100% {transform: rotate(-5deg);}
+        }
+        #dude.top.animation .leg.left div {
+            animation: topLegLeftDiv 2s ease-in-out infinite;
+        }
+        @keyframes topLegLeftDiv {
+            0%   {transform: rotate(-5deg);}
+            35%  {transform: rotate(-60deg);}
+            60%  {transform: rotate(5deg);}
+            100% {transform: rotate(-5deg);}
+        }
+        #dude.top.animation .leg.right div {
+            animation: topLegRightDiv 2s ease-in-out infinite;
+        }
+        @keyframes topLegRightDiv {
+            0%   {transform: rotate(5deg);}
+            35%  {transform: rotate(60deg);}
+            60%  {transform: rotate(5deg);}
+            100% {-webkit-transform: rotate(5deg);}
+        }
+
+    </style>
+
+    <div class="demo">
+        <div id="dude" class="center animation">
+            <div class="body">
+                <div class="head"></div>
+                <div class="arm left" ><div></div></div>
+                <div class="arm right"><div></div></div>
+                <div class="leg left" ><div></div></div>
+                <div class="leg right"><div></div></div>
+            </div>
+        </div>
+        <div id="nav">
+            <a id="left"></a>
+            <a id="top"></a>
+            <a id="right"></a>
+            <a id="bottom"></a>
+            <a id="center" class="active"></a>
+        </div>
+    </div>
+
+    <script>
+
+        var Dude = {
+
+            type: 'center',
+
+            Start: function() {
+                if (!Dude.end) {
+                    Dude.end = true;
+                    Dude.e.className = Dude.type + ' animation';
+                }
+            },
+
+            Update: function() {
+                Dude.e.className = Dude.type;
+                for (var i = 0; i < Dude.d.length; i++) {
+                    Dude.d[i].removeAttribute('style');
+                };
+            },
+
+            Stop: function() {
+                for (var i = 0; i < Dude.d.length; i++) {
+                    var transform = getComputedStyle(Dude.d[i]).transform;
+                    Dude.d[i].style.transform = transform;
+                };
+                Dude.e.className = '';
+                setTimeout(Dude.Update, null);
+            },
+
+            Select: function(e) {
+                for (var i = 0; i < Dude.a.length; i++) {
+                    Dude.a[i].removeAttribute('class');
+                }
+                e.className = 'active';
+            },
+
+            Change: function() {
+                if (Dude.type !== this.id) {
+                    Dude.end = false;
+                    Dude.type = this.id;
+                    Dude.Select(this);
+                    Dude.Stop();
+                }
+            },
+
+            Bind: function() {
+                for (var i = 0; i < Dude.a.length; i++) {
+                    Dude.a[i].addEventListener('click', Dude.Change, false);
+                }
+                for (var i = 0; i < Dude.d.length; i++) {
+                    Dude.d[i].addEventListener('transitionend', Dude.Start, false);
+                }
+            },
+
+            Init: function() {
+                var nav = document.getElementById('nav');
+                Dude.e = document.getElementById('dude');
+                Dude.a = nav.getElementsByTagName('a');
+                Dude.d = Dude.e.getElementsByTagName('div');
+                Dude.Bind();
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', Dude.Init, false);
+
+    </script>
+
+</body>
+</html>

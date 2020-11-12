@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Flexibility</title>
+</head>
+<body>
+
+<style>
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+	body {
+		background:#000;
+		overflow:hidden; margin:0;
+		background: -webkit-radial-gradient(circle, #BA68C8, #9C27B0);
+		background:    -moz-radial-gradient(circle, #BA68C8, #9C27B0);
+		background:     -ms-radial-gradient(circle, #BA68C8, #9C27B0);
+		background:         radial-gradient(circle, #BA68C8, #9C27B0);
+
+	}
+	div {
+		position:absolute; margin:0;
+		-webkit-transform-style:preserve-3d;
+		   -moz-transform-style:preserve-3d;
+		        transform-style:preserve-3d;
+	}
+	#perspective {
+		height:100%; width:100%;
+		-webkit-perspective:300px;
+		   -moz-perspective:300px;
+		        perspective:300px;
+	}
+	#container {
+		height:100%; width:100%;
+		-webkit-transform:rotateY(90deg) translateX(50%) rotateY(-90deg);
+		   -moz-transform:rotateY(90deg) translateX(50%) rotateY(-90deg);
+		        transform:rotateY(90deg) translateX(50%) rotateY(-90deg);
+	}
+	#focus {
+		top:00%; right:00%; bottom:00%; left:00%;
+		-webkit-animation:spin 6s infinite linear;
+		   -moz-animation:spin 6s infinite linear;
+		        animation:spin 6s infinite linear;
+	}
+	@-webkit-keyframes spin {
+		from {-webkit-transform:rotatey(0deg) rotateX(0deg);}
+		to   {-webkit-transform:rotatey(-360deg) rotateX(360deg);}
+	}
+	@-moz-keyframes spin {
+		from {-moz-transform:rotatey(0deg) rotateX(0deg);}
+		to   {-moz-transform:rotatey(-360deg) rotateX(360deg);}
+	}
+	@keyframes spin {
+		from {transform:rotatey(0deg) rotateX(0deg);}
+		to   {transform:rotatey(-360deg) rotateX(360deg);}
+	}
+	#a {
+		top:85%; right:05%; bottom:05%; left:85%;
+		background:rgba(255,255,255,.70); box-shadow:0 0 5px #9C27B0;
+		-webkit-transform:rotateY(90deg) translateX(00%) rotateY(90deg);
+		   -moz-transform:rotateY(90deg) translateX(00%) rotateY(90deg);
+		        transform:rotateY(90deg) translateX(00%) rotateY(90deg);
+	}
+	#b {
+		top:00%; right:-50%; bottom:00%; left:50%;
+		background:rgba(255,255,255,.70); box-shadow:0 0 5px #9C27B0;
+		-webkit-animation:b 20s infinite linear;
+		   -moz-animation:b 20s infinite linear;
+		        animation:b 20s infinite linear;
+	}
+	@-webkit-keyframes b {
+		from {-webkit-transform:rotatey(0deg) translateX(50%);}
+		10%  {-webkit-transform:rotatey(0deg) translateX(50%);}
+		20%  {-webkit-transform:rotatey(40deg) translateX(50%);}
+		30%  {-webkit-transform:rotatey(40deg) translateX(50%);}
+		40%  {-webkit-transform:rotatey(0deg) translateX(50%);}
+		50%  {-webkit-transform:rotatey(0deg) translateX(50%);}
+		60%  {-webkit-transform:rotatey(0deg) translateX(50%);}
+		70%  {-webkit-transform:rotatey(0deg) translateX(50%);}
+		80%  {-webkit-transform:rotatey(40deg) translateX(50%);}
+		90%  {-webkit-transform:rotatey(40deg) translateX(50%);}
+		to   {-webkit-transform:rotatey(0deg) translateX(50%);}
+	}
+	@-moz-keyframes b {
+		from {-moz-transform:rotatey(0deg) translateX(50%);}
+		10%  {-moz-transform:rotatey(0deg) translateX(50%);}
+		20%  {-moz-transform:rotatey(40deg) translateX(50%);}
+		30%  {-moz-transform:rotatey(40deg) translateX(50%);}
+		40%  {-moz-transform:rotatey(0deg) translateX(50%);}
+		50%  {-moz-transform:rotatey(0deg) translateX(50%);}
+		60%  {-moz-transform:rotatey(0deg) translateX(50%);}
+		70%  {-moz-transform:rotatey(0deg) translateX(50%);}
+		80%  {-moz-transform:rotatey(40deg) translateX(50%);}
+		90%  {-moz-transform:rotatey(40deg) translateX(50%);}
+		to   {-moz-transform:rotatey(0deg) translateX(50%);}
+	}
+	@keyframes b {
+		from {transform:rotatey(0deg) translateX(50%);}
+		10%  {transform:rotatey(0deg) translateX(50%);}
+		20%  {transform:rotatey(40deg) translateX(50%);}
+		30%  {transform:rotatey(40deg) translateX(50%);}
+		40%  {transform:rotatey(0deg) translateX(50%);}
+		50%  {transform:rotatey(0deg) translateX(50%);}
+		60%  {transform:rotatey(0deg) translateX(50%);}
+		70%  {transform:rotatey(0deg) translateX(50%);}
+		80%  {transform:rotatey(40deg) translateX(50%);}
+		90%  {transform:rotatey(40deg) translateX(50%);}
+		to   {transform:rotatey(0deg) translateX(50%);}
+	}
+	#c {
+		top:-50%; right:00%; bottom:50%; left:00%;
+		background:rgba(255,255,255,.70); box-shadow:0 0 5px #9C27B0;
+		-webkit-animation:c 20s infinite linear;
+		   -moz-animation:c 20s infinite linear;
+		        animation:c 20s infinite linear;
+	}
+	@-webkit-keyframes c {
+		from {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		10%  {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		20%  {-webkit-transform:rotatex(-40deg) translateY(-50%);}
+		30%  {-webkit-transform:rotatex(-40deg) translateY(-50%);}
+		40%  {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		50%  {-webkit-transform:rotatex(-40deg) translateY(-50%);}
+		60%  {-webkit-transform:rotatex(-40deg) translateY(-50%);}
+		70%  {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		80%  {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		90%  {-webkit-transform:rotatex(0deg) translateY(-50%);}
+		to   {-webkit-transform:rotatex(0deg) translateY(-50%);}
+	}
+	@-moz-keyframes c {
+		from {-moz-transform:rotatex(0deg) translateY(-50%);}
+		10%  {-moz-transform:rotatex(0deg) translateY(-50%);}
+		20%  {-moz-transform:rotatex(-40deg) translateY(-50%);}
+		30%  {-moz-transform:rotatex(-40deg) translateY(-50%);}
+		40%  {-moz-transform:rotatex(0deg) translateY(-50%);}
+		50%  {-moz-transform:rotatex(-40deg) translateY(-50%);}
+		60%  {-moz-transform:rotatex(-40deg) translateY(-50%);}
+		70%  {-moz-transform:rotatex(0deg) translateY(-50%);}
+		80%  {-moz-transform:rotatex(0deg) translateY(-50%);}
+		90%  {-moz-transform:rotatex(0deg) translateY(-50%);}
+		to   {-moz-transform:rotatex(0deg) translateY(-50%);}
+	}
+	@keyframes c {
+		from {transform:rotatex(0deg) translateY(-50%);}
+		10%  {transform:rotatex(0deg) translateY(-50%);}
+		20%  {transform:rotatex(-40deg) translateY(-50%);}
+		30%  {transform:rotatex(-40deg) translateY(-50%);}
+		40%  {transform:rotatex(0deg) translateY(-50%);}
+		50%  {transform:rotatex(-40deg) translateY(-50%);}
+		60%  {transform:rotatex(-40deg) translateY(-50%);}
+		70%  {transform:rotatex(0deg) translateY(-50%);}
+		80%  {transform:rotatex(0deg) translateY(-50%);}
+		90%  {transform:rotatex(0deg) translateY(-50%);}
+		to   {transform:rotatex(0deg) translateY(-50%);}
+	}
+</style>
+
+<div id="perspective">
+<div id="container">
+<div id="focus">
+	<div id="a">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        <div id="c">
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    	<div id="b">
+        	<div id="c">
+        	<div id="c">
+            <div id="c">
+            <div id="c">
+            <div id="c">
+            <div id="c">
+            <div id="c">
+            <div id="c"></div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+       		</div>
+        	<div id="b">
+            	<div id="c">
+        		<div id="c">
+            	<div id="c">
+                <div id="c">
+                <div id="c">
+                <div id="c">
+                <div id="c">
+                <div id="c"></div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            	</div>
+       			</div>
+            	<div id="b">
+                	<div id="c">
+        			<div id="c">
+            		<div id="c">
+                	<div id="c">
+                    <div id="c">
+                    <div id="c">
+                    <div id="c">
+                    <div id="c"></div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                	</div>
+           			</div>
+       				</div>
+                	<div id="b">
+                    	<div id="c">
+        				<div id="c">
+            			<div id="c">
+                		<div id="c">
+                    	<div id="c">
+                        <div id="c">
+                        <div id="c">
+                        <div id="c"></div>
+                        </div>
+                        </div>
+                        </div>
+                    	</div>
+                		</div>
+            			</div>
+       					</div>
+                    	<div id="b">
+                       		<div id="c">
+        					<div id="c">
+            				<div id="c">
+                			<div id="c">
+                    		<div id="c">
+                        	<div id="c">
+                            <div id="c">
+                            <div id="c"></div>
+                            </div>
+                            </div>
+                        	</div>
+                    		</div>
+                			</div>
+            				</div>
+        					</div>
+                        	<div id="b">
+                            	<div id="c">
+        						<div id="c">
+            					<div id="c">
+                				<div id="c">
+                    			<div id="c">
+                        		<div id="c">
+                            	<div id="c">
+                                <div id="c"></div>
+                                </div>
+                            	</div>
+                        		</div>
+                    			</div>
+                				</div>
+            					</div>
+        						</div>
+                            	<div id="b">
+                                	<div id="c">
+        							<div id="c">
+            						<div id="c">
+				                	<div id="c">
+                			    	<div id="c">
+                        			<div id="c">
+                            		<div id="c">
+                                	<div id="c"></div>
+                               	 	</div>
+		                            </div>
+        			                </div>
+                    				</div>
+					                </div>
+						            </div>
+						        	</div>
+                                	<div id="b">
+                                    	<div id="c">
+       								 	<div id="c">
+       							     	<div id="c">
+             						   	<div id="c">
+          					          	<div id="c">
+                        				<div id="c">
+                            			<div id="c">
+                                		<div id="c"></div>
+                               			</div>
+                            			</div>
+                        				</div>
+                    					</div>
+                						</div>
+            							</div>
+        								</div>
+       								</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

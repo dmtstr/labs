@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dice</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    .wrap {
+        position: absolute;
+        top: 0; left: 0;
+        right: 0; bottom: 0;
+        background-image: -webkit-radial-gradient(cover, #333, #000);
+        background-image: -moz-radial-gradient(cover, #333, #000);
+        background-image: -ms-radial-gradient(cover, #333, #000);
+        background-image: -o-radial-gradient(cover, #333, #000);
+        background-image: radial-gradient(cover, #333, #000);
+        -webkit-perspective: 500px;
+        -moz-perspective: 500px;
+        -ms-perspective: 500px;
+        -o-perspective: 500px;
+        perspective: 500px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    #cube {
+        position: absolute;
+        top: 50%; left: 50%;
+        height: 140px;
+        width: 140px;
+        margin-top: -70px;
+        margin-left: -70px;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+    #cube .plane {
+        position: absolute;
+        top: 0; left: 0;
+        right: 0; bottom: 0;
+        box-shadow: inset 0 0 2px rgba(0,0,0,0.6);
+    }
+    #cube .p1 {
+        background: #4CAF50;
+        -webkit-transform: translateZ(69px);
+        -moz-transform: translateZ(69px);
+        -ms-transform: translateZ(69px);
+        -o-transform: translateZ(69px);
+        transform: translateZ(69px);
+    }
+    #cube .p2 {
+        background: #2E7D32;
+        -webkit-transform: rotateY(180deg) translateZ(69px);
+        -moz-transform: rotateY(180deg) translateZ(69px);
+        -ms-transform: rotateY(180deg) translateZ(69px);
+        -o-transform: rotateY(180deg) translateZ(69px);
+        transform: rotateY(180deg) translateZ(69px);
+    }
+    #cube .p3 {
+        background: #43A047;
+        -webkit-transform: rotateY(90deg) translateZ(69px);
+        -moz-transform: rotateY(90deg) translateZ(69px);
+        -ms-transform: rotateY(90deg) translateZ(69px);
+        -o-transform: rotateY(90deg) translateZ(69px);
+        transform: rotateY(90deg) translateZ(69px);
+    }
+    #cube .p4 {
+        background: #43A047;
+        -webkit-transform: rotateY(-90deg) translateZ(69px);
+        -moz-transform: rotateY(-90deg) translateZ(69px);
+        -ms-transform: rotateY(-90deg) translateZ(69px);
+        -o-transform: rotateY(-90deg) translateZ(69px);
+        transform: rotateY(-90deg) translateZ(69px);
+    }
+    #cube .p5 {
+        background: #388E3C;
+        -webkit-transform: rotateX(-90deg) translateZ(69px);
+        -moz-transform: rotateX(-90deg) translateZ(69px);
+        -ms-transform: rotateX(-90deg) translateZ(69px);
+        -o-transform: rotateX(-90deg) translateZ(69px);
+        transform: rotateX(-90deg) translateZ(69px);
+    }
+    #cube .p6 {
+        background: #388E3C;
+        -webkit-transform: rotateX(90deg) translateZ(69px);
+        -moz-transform: rotateX(90deg) translateZ(69px);
+        -ms-transform: rotateX(90deg) translateZ(69px);
+        -o-transform: rotateX(90deg) translateZ(69px);
+        transform: rotateX(90deg) translateZ(69px);
+    }
+
+    #cube .plane span {
+        display: block;
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background: #FFF;
+        border-radius: 15px;
+        -webkit-transform: translateZ(4px);
+        box-shadow: 0 0 2px rgba(0,0,0,0.8);
+    }
+
+    #cube .p1 span:nth-child(1) {top: 60px; right: 60px;}
+    #cube .p2 span:nth-child(1) {top: 25px; right: 25px;}
+    #cube .p2 span:nth-child(2) {bottom: 25px; left: 25px;}
+    #cube .p3 span:nth-child(1) {top: 25px; left: 25px;}
+    #cube .p3 span:nth-child(2) {top: 60px; left: 60px;}
+    #cube .p3 span:nth-child(3) {bottom: 25px; right: 25px;}
+    #cube .p4 span:nth-child(1) {top: 25px; left: 25px;}
+    #cube .p4 span:nth-child(2) {top: 25px; right: 25px;}
+    #cube .p4 span:nth-child(3) {bottom: 25px; left: 25px;}
+    #cube .p4 span:nth-child(4) {bottom: 25px; right: 25px;}
+    #cube .p5 span:nth-child(1) {top: 25px; left: 25px;}
+    #cube .p5 span:nth-child(2) {top: 25px; right: 25px;}
+    #cube .p5 span:nth-child(3) {bottom: 25px; left: 25px;}
+    #cube .p5 span:nth-child(4) {bottom: 25px; right: 25px;}
+    #cube .p5 span:nth-child(5) {top: 60px; left: 60px;}
+    #cube .p6 span:nth-child(1) {top: 25px; left: 25px;}
+    #cube .p6 span:nth-child(2) {top: 25px; right: 25px;}
+    #cube .p6 span:nth-child(3) {bottom: 25px; left: 25px;}
+    #cube .p6 span:nth-child(4) {bottom: 25px; right: 25px;}
+    #cube .p6 span:nth-child(5) {top: 60px; left: 25px;}
+    #cube .p6 span:nth-child(6) {top: 60px; right: 25px;}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+    <div id="cube">
+        <div class="plane p1">
+            <span></span>
+        </div>
+        <div class="plane p2">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="plane p3">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="plane p4">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="plane p5">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="plane p6">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var Cube = (function () {
+
+
+        var drag = false;
+        var element = document.getElementById('cube');
+        var speed = 6;
+        var time;
+
+        var x = new Axis();
+        var y = new Axis();
+
+        function Axis() {
+            this.angle = Math.random() * 180;
+            this.speed = Math.random() * 5;
+        }
+
+        function animation() {
+            if (!drag) {
+                x.angle = x.angle - x.speed;
+                y.angle = y.angle - y.speed;
+                x.speed = x.speed / 1.01;
+                y.speed = y.speed / 1.01;
+                element.style.webkitTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.mozTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.msTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.oTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.transform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+            }
+            requestAnimationFrame(animation);
+        }
+
+        function start(e) {
+            drag = true;
+            time = new Date();
+            x.start = e.clientX;
+            y.start = e.clientY;
+            x.cache = x.angle;
+            y.cache = y.angle;
+        }
+
+        function move(e) {
+            if (drag) {
+                x.angle = x.cache + (e.clientX - x.start) / speed;
+                y.angle = y.cache + (e.clientY - y.start) / speed;
+                element.style.webkitTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.mozTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.msTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.oTransform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+                element.style.transform = 'rotateY(' + x.angle + 'deg) rotateX(' + y.angle + 'deg)';
+            }
+        }
+
+        function end() {
+            drag = false;
+            time = new Date() - time;
+            x.speed = (x.cache - x.angle) / time * speed;
+            y.speed = (y.cache - y.angle) / time * speed;
+            console.log(x.speed, y.speed);
+        }
+
+        return {
+            init: function () {
+                animation();
+                document.addEventListener('mousedown', start, false);
+                document.addEventListener('mousemove', move, false);
+                document.addEventListener('mouseup', end, false);
+            }
+        }
+    })();
+
+
+    window.addEventListener('DOMContentLoaded', Cube.init);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+	<style>
+		body {
+			margin:0;
+		}
+		canvas {
+			display: block;
+		}
+	</style>
+
+	<canvas id="canvas"></canvas>
+
+	<script>
+		var canvas, ctx;
+		var width, height;
+		var size = 200;
+		var nodes = new Array(size);
+		var min = 20, max = 100;
+
+		var sign = function() {
+			return Math.random() < 0.5 ? 1 : -1;
+		};
+
+		var getL = function() {
+			return Math.round(Math.random() * (max - min) + min);
+		};
+
+		var Node = function() {
+			this.x = Math.random() * width;
+			this.y = Math.random() * height;
+			this.a = Math.round(Math.random() * 4) * Math.PI / 2;
+			this.l = getL();
+		};
+
+		var create = function() {
+			for (var i = 0; i < size; i++) {
+				nodes[i] = new Node();
+			}
+		};
+
+		var draw = function() {
+
+			ctx.fillStyle = 'rgba(0,131,143,0.08)';
+			ctx.fillRect(0, 0, width, height);
+
+			for (var i = 0; i < size; i++) {
+
+				var node = nodes[i];
+				node.x += Math.cos(node.a);
+				node.y += Math.sin(node.a);
+				node.l--;
+
+				if (node.x <= 0 || node.x >= width) {
+					node.a = node.a + Math.PI;
+					node.l = getL();
+				}
+
+				if (node.y <= 0 || node.y >= height) {
+					node.a = node.a + Math.PI;
+					node.l = getL();
+				}
+
+				if (node.l == 0) {
+					node.a = node.a + sign() * Math.PI / 2;
+					node.l = getL();
+				}
+
+				ctx.beginPath();
+				ctx.fillStyle = '#E2F4F4';
+				ctx.fillRect(node.x, node.y, 1, 1)
+			}
+
+		};
+
+		var animation = function() {
+			draw();
+			requestAnimationFrame(animation);
+		};
+
+		var config = function() {
+			width = window.innerWidth;
+			height = window.innerHeight;
+			canvas.width = width;
+			canvas.height = height;
+			ctx.fillStyle = 'rgba(0,131,143,1)';
+			ctx.fillRect(0, 0, width, height);
+		};
+
+		var resize = function() {
+			config();
+			create();
+		};
+
+		var init = function() {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			config();
+			create();
+			requestAnimationFrame(animation);
+		};
+
+		document.addEventListener('DOMContentLoaded', init, false);
+		window.addEventListener('resize', resize, false);
+
+	</script>
+
+</body>
+</html>

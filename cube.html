@@ -1,0 +1,118 @@
+<html>
+<head>
+    <title>3D</title>
+</head>
+<body>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+        }
+        canvas {
+            position: absolute;
+            top: 50%; left: 50%;
+            margin: -200px 0 0 -200px;
+        }
+    </style>
+
+    <canvas></canvas>
+    <script>
+
+
+        var D = {
+
+            size: 400,
+            cube: 120,
+            a: 0,
+
+            Get: function(data) {
+                var z = 1 + data.z / 200;
+                return {
+                    x: D.size / 2 + data.x / z,
+                    y: D.size / 2 + data.y / z
+                }
+            },
+
+
+            Lines: function() {
+
+                for (var i = 0; i < D.points.length; i++) {
+
+                    var j = (i + 1) % 4 ? i + 1 : i - 3;
+                    var a = D.Get(D.points[i]);
+                    var b = D.Get(D.points[j]);
+
+                    D.ctx.beginPath();
+                    D.ctx.moveTo(a.x, a.y);
+                    D.ctx.lineTo(b.x, b.y);
+                    D.ctx.stroke();
+
+                    if (i < 4) {
+                        var c = D.Get(D.points[i + 4]);
+                        D.ctx.strokeStyle = '#EEF008';
+                        D.ctx.beginPath();
+                        D.ctx.moveTo(a.x, a.y);
+                        D.ctx.lineTo(c.x, c.y);
+                        D.ctx.stroke();
+                    }
+                }
+            },
+
+            Update: function() {
+                D.a += Math.PI / 180;
+                for (var i = 0; i < D.points.length; i++) {
+                    var p = D.points[i];
+                    p.x = p.x0 * Math.cos(D.a) + (p.y0 * Math.sin(D.a) + p.z0 * Math.cos(D.a)) * Math.sin(D.a);
+                    p.y = p.y0 * Math.cos(D.a) - p.z0 * Math.sin(D.a);
+                    p.z = (p.y0 * Math.sin(D.a) + p.z0 * Math.cos(D.a)) * Math.cos(D.a) - p.x0 * Math.sin(D.a);
+                }
+            },
+
+            Clear: function() {
+                D.ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                D.ctx.fillRect(0, 0, D.size, D.size);
+            },
+
+            Draw: function() {
+                D.Clear();
+                D.Update();
+                D.Lines();
+                requestAnimationFrame(D.Draw);
+            },
+
+            Plane: function(e) {
+
+                var min = -D.cube * 0.5;
+                var max = D.cube * 0.5;
+                return [
+                    {x0: min, y0: min, z0: e ? max : min},
+                    {x0: max, y0: min, z0: e ? max : min},
+                    {x0: max, y0: max, z0: e ? max : min},
+                    {x0: min, y0: max, z0: e ? max : min}
+                ];
+            },
+
+            Create: function() {
+                
+                var pa = D.Plane(true);
+                var pb = D.Plane(false);
+                D.points = pa.concat(pb);
+                D.Draw();
+            },
+
+            Init: function() {
+                D.canvas = document.querySelector('canvas');
+                D.ctx = D.canvas.getContext('2d');
+                D.canvas.width = D.canvas.height = D.size;
+                D.Create();
+            }
+        };
+
+        D.Init();
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Figure</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        canvas {
+            display: block;
+            position: absolute;
+            top: 50%; left: 50%;
+            margin: -100px 0 0 -100px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="c"></canvas>
+
+<script>
+
+    var D = {
+
+        w: 200, h: 200, r: 50,
+        size: 50000,
+        p: 7.5,
+        x: 2,
+        y: 3,
+
+        Add: function(val) {
+            return val * D.r + D.w / 2;
+        },
+
+        Particle: function(i) {
+
+            var a = Math.sin(i * D.p);
+            var b = a * 0.5 + 1;
+            var c = Math.cos(i * D.p) / 3;
+            var x = b * Math.sin(i * D.x - c) + Math.sin(i * 3.45678) / 16 * a;
+            var y = b * Math.cos(i * D.y - c) + Math.cos(i * 3.45678) / 16 * a;
+
+            D.ctx.fillStyle = 'rgba(0,0,0,.10)';
+            D.ctx.fillRect(D.Add(x), D.Add(y), 1, 1);
+        },
+
+        Draw: function() {
+            D.p = +(Math.random() * 10).toFixed(2);
+            D.x = 1 + Math.round(Math.random() * 4);
+            D.y = 1 + Math.round(Math.random() * 4);
+            D.ctx.clearRect(0, 0, D.w, D.h);
+            for (var i = 0; i < D.size; i++) {
+                D.Particle(i);
+            }
+        },
+
+        Init: function() {
+            D.canvas = document.getElementById('c');
+            D.canvas.width = D.w;
+            D.canvas.height = D.h;
+            D.ctx = D.canvas.getContext('2d');
+            D.Draw();
+            setInterval(D.Draw, 1000);
+        }
+    };
+
+    D.Init();
+
+</script>
+</body>
+</html>

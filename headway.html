@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Headway</title>
+    <style>
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #2D2739;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas></canvas>
+
+    <script>
+
+        (function(window, document, Math) {
+
+            // --------------------
+            // Variables
+            // --------------------
+
+            var $canvas,
+                ctx,
+                frame,
+                planes = 20,
+                lines = 20,
+                size,
+                width,
+                data = [],
+                center = {};
+
+
+
+            // --------------------
+            // Utils
+            // --------------------
+
+            function convert(n, z) {
+                return n / (z / 8 + 1);
+            }
+
+
+
+            // --------------------
+            // Animation
+            // --------------------
+
+            function draw(x, a, z) {
+                var y = convert(a, z);
+                var s = convert(3, z);
+                var o = 0.5 - z * 0.5 / planes;
+                ctx.fillStyle = 'rgba(255,255,255,' + o +')';
+                ctx.fillRect(x, center.y + y, s, s);
+                ctx.fillRect(x, center.y - y, s, s);
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, $canvas.width, $canvas.height);
+                for (var i = 0; i < data.length; i++) {
+                    var p = data[i];
+                    var x = center.x + convert(p.x, p.z);
+                    if (x < $canvas.width && x > 0) draw(x, p.y, p.z);
+                    p.z -= 0.05;
+                    if (p.z < 0) p.z += planes;
+                }
+                frame = requestAnimationFrame(animate);
+            }
+
+
+
+            // --------------------
+            // Listeners
+            // --------------------
+
+            function resize() {
+                update();
+                create();
+            }
+
+
+
+            // --------------------
+            // Creation
+            // --------------------
+
+            function create() {
+                width = $canvas.width / lines;
+                size = Math.ceil($canvas.width / convert(width, planes - 1));
+                data.length = 0;
+                for (var z = 0; z < planes; z++) {
+                    for (var i = 0; i < size; i++) {
+                        var x = i * width - size * width / 2;
+                        var y = $canvas.height / 2 + 60 * Math.cos(x * 5) + 60;
+                        data.push({x: x, z: z, y: y})
+                    }
+                }
+            }
+
+
+            function update() {
+                $canvas.width = document.body.offsetWidth;
+                $canvas.height = document.body.offsetHeight;
+                center.x = $canvas.width / 2;
+                center.y = $canvas.height / 2;
+            }
+
+
+
+            // --------------------
+            // Initialization
+            // --------------------
+
+            function events() {
+                window.addEventListener('resize', resize, false);
+            }
+
+            function elements() {
+                $canvas = document.querySelector('canvas');
+                ctx = $canvas.getContext('2d');
+            }
+
+            function init() {
+                elements();
+                events();
+                update();
+                create();
+                animate();
+            }
+
+            document.addEventListener('DOMContentLoaded', init, false);
+
+        })(window, document, Math);
+
+
+    </script>
+
+</body>
+</html>

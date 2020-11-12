@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>DI FM Radio</title>
+</head>
+<body>
+
+<style>
+    body {
+        margin:0;
+        background:#111;
+        font-family:Tahoma, Geneva, sans-serif;
+        font-size:11px;
+        -webkit-user-select:none;
+    }
+    #radio {
+        position:absolute;
+        top:50px;
+        left:50px;
+        width:150px;
+    }
+    #controls {
+        background-image:-webkit-linear-gradient(top, #333, #111);
+        padding:2px 4px 2px 4px;
+        border-radius:6px;
+        box-shadow:0 0 4px #000;
+    }
+    #stations {
+        background-image:-webkit-linear-gradient(top, #222, #111);
+        display:none;
+        padding:4px;
+        border-radius:6px;
+        box-shadow:0 0 4px #000;
+        margin:8px 0 0 0;
+        position:relative;
+        overflow:hidden;
+    }
+    #name {
+        overflow:hidden;
+        border-bottom:1px solid #000;
+        color:#666;
+        text-shadow:1px 1px 1px #000;
+        padding:0 6px 3px 4px;
+    }
+    #name span {
+        display:block;
+        float:left;
+        padding:2px 0 0 0;
+    }
+    #signal {
+        float:right;
+        height:12px;
+        width:28px;
+        position:relative;
+        margin:2px 0 0 0;
+    }
+    #signal div {
+        position:absolute;
+        background:#666;
+        width:3px;
+        bottom:0;
+        box-shadow:1px 1px 1px #000;
+        height:1px;
+        -webkit-transition:height 0.15s ease-in-out;
+    }
+    #signal div:nth-child(1) {left:0;}
+    #signal div:nth-child(2) {left:4px;}
+    #signal div:nth-child(3) {left:8px;}
+    #signal div:nth-child(4) {left:12px;}
+    #signal div:nth-child(5) {left:16px;}
+    #signal div:nth-child(6) {left:20px;}
+    #signal div:nth-child(7) {left:24px;}
+
+    #buttons {
+        border-top:1px solid #444;
+        padding:5px 0 4px 2px;
+        overflow:hidden;
+    }
+    #buttons a {
+        display:block;
+        float:left;
+        position:relative;
+        margin:0 4px 0 0;
+        background-color:#333;
+        box-shadow:1px 1px 1px #000, inset 0 1px 1px #555;
+        border-radius:2px;
+        height:15px;
+        width:15px;
+        cursor:pointer;
+    }
+    #buttons a:active {
+        top:1px;
+    }
+    #on   {background-image:url(http://jsrun.it/assets/j/2/d/S/j2dSS.png);}
+    #off  {background-image:url(http://jsrun.it/assets/v/Z/D/r/vZDrU.png);}
+    #play {background-image:url(http://jsrun.it/assets/z/9/b/0/z9b0I.png);}
+    #stop {background-image:url(http://jsrun.it/assets/p/P/g/M/pPgMm.png);}
+
+    #volume {
+        float:left;
+        width:90px;
+        height:3px;
+        background-color:#333;
+        background-image:-webkit-linear-gradient(left, transparent 90%, #111 90%, #111);
+        background-size:6px 10px;
+        position:relative;
+        border-radius:1px; box-shadow:0 1px 1px #000;
+        overflow:hidden;
+        margin:5px 0 0 5px;
+        cursor:pointer;
+    }
+    #volume div {
+        position:absolute;
+        top:0;
+        left:0;
+        height:100%;
+        width:0;
+        background-color:#666;
+        background-image:-webkit-linear-gradient(left, transparent 90%, #111 90%, #111);
+        background-size:6px 10px;
+        -webkit-transition:width 0.3s ease;
+    }
+    #list {
+        float:left;
+        overflow:hidden;
+        position:relative;
+        width:127px;
+        height:145px;
+    }
+    #list div {
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+    }
+    #list a {
+        display:block;
+        color:#555;
+        text-shadow:1px 1px 1px #000;
+        border-bottom:1px solid #000;
+        border-top:1px solid #444;
+        padding:3px 0 3px 5px;
+        cursor:pointer;
+        -webkit-transition:color 0.1s ease;
+    }
+    #list a:first-child   {border-top:none;}
+    #list a:last-child    {border-bottom:none;}
+    #list a.current,
+    #list a.current:hover {color:#888;}
+    #list a.select,
+    #list a:hover         {color:#777;}
+
+    #scroll {
+        float:left;
+        width:2px;
+        height:138px;
+        background:#444;
+        border-radius:1px;
+        box-shadow:1px 1px 1px #000;
+        margin:4px 0 0 9px;
+        position:relative;
+    }
+    #scroll div       {
+        position:absolute;
+        top:0;
+        left:-1px;
+        width:4px;
+        height:24px;
+        background:#666;
+        box-shadow:0 0 3px #000;
+        cursor:pointer;
+    }
+    #scroll div:hover {background:#888;}
+</style>
+
+<div id="radio">
+    <div id="controls">
+        <div id="name">
+            <span>Loading...</span>
+            <div id="signal">
+                <!-- fake -->
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div id="buttons">
+            
+            <a id="on"></a>
+            <a id="stop"></a>
+            
+            <div id="volume">
+                <div></div>
+            </div>
+            
+        </div>
+    </div>
+    <div id="stations">
+        <div id="list">
+            <div>
+                <!--
+                <a>Ambient</a>
+                <a>Breaks</a>
+                <a>Chillout</a>
+                <a>Deep House</a>
+                <a>Drum and Bass</a>
+                <a>Dubstep</a>
+                <a>Electro House</a>
+                <a>Euro Dance</a>
+                <a>Hardcore</a>
+                <a>Hardstyle</a>
+                -->
+            </div>
+        </div>
+        <div id="scroll">
+            <div></div>
+        </div>
+    </div>
+    <audio src="">
+    </audio>
+</div>
+
+<script type="text/javascript" src="http://jsdo.it/lib/jquery-1.8.3/js"></script>
+
+<script>
+    $(function() {
+        var stations = [
+            ['Ambient', 'http://pub6.di.fm/di_ambient'],
+            ['Breaks', 'http://pub6.di.fm/di_breaks'],
+            ['Chillout', 'http://pub6.di.fm/di_chillout'],
+            ['Deep House', 'http://pub6.di.fm/di_deephouse'],
+            ['Drum and Bass', 'http://pub6.di.fm/di_drumandbass'],
+            ['Dubstep', 'http://pub6.di.fm/di_dubstep'],
+            ['Electro House', 'http://pub6.di.fm/di_electrohouse'],
+            ['Euro Dance', 'http://pub6.di.fm/di_eurodance'],
+            ['Goa & Psychedelic', 'http://pub6.di.fm/di_goapsy'],
+            ['Hardcore', 'http://pub6.di.fm/di_hardcore'],
+            ['Hardstyle', 'http://pub6.di.fm/di_hardstyle'],
+            ['House', 'http://pub6.di.fm/di_house'],
+            ['Liquid D&B', 'http://pub6.di.fm/di_liquiddnb'],
+            ['Mainstage', 'http://pub6.di.fm/di_mainstage'],
+            ['Minimal', 'http://pub6.di.fm/di_minimal'],
+            ['Progressive', 'http://pub6.di.fm/di_progressive'],
+            ['Tech House', 'http://pub6.di.fm/di_techhouse'],
+            ['Techno', 'http://pub6.di.fm/di_techno'],
+            ['Trance', 'http://pub6.di.fm/di_trance'],
+            ['Vocal Trance', 'http://pub6.di.fm/di_vocaltrance']
+        ];
+
+        /*html elements*/
+        var radio = $('#radio');
+        var controls = $('#controls');
+        var list = $('#list div');
+        var a; //$('#list a');
+        var name = $('#name span');
+        var audio  = $('audio');
+        var lizer = $('#signal div');
+        var volume = $('#volume');
+        var sound = volume.children();
+        var stats = $('#stations');
+        var scrol = $('#scroll');
+        var handle = scrol.children();
+        var on = $('#on');
+        var off = $('#off');
+        var stop = $('#stop');
+        var play = $('#play');
+
+        /*radio*/
+        var equa = null;
+        var current = 2;
+        var vol = 0.6;
+
+        /*scroll*/
+        var s = false;
+        var startY;
+        var startTop;
+        var maxTop = scrol.height() - handle.height();
+
+        /*drag*/
+        var d = false;
+        var dragX;
+        var dragY;
+        var rLeft;
+        var rTop;
+
+
+        /*---------------------------- Preload images -------------------------------*/
+
+        function preload(images) {
+            $(images).each(function(){
+                $('<img/>')[0].src = this;
+            });
+        }
+
+        /*------------------------- Create stations list ----------------------------*/
+
+        addList();
+
+        function addList() {
+            var l = stations.length;
+            var html = '';
+            for (i = 0; i < l; i++) {
+                html += '<a rel="'+stations[i][1]+'">'+stations[i][0]+'</a>';
+            }
+            list.html(html);
+            a = $('#list a');
+
+            preload([
+                'http://jsrun.it/assets/v/Z/D/r/vZDrU.png',
+                'http://jsrun.it/assets/j/2/d/S/j2dSS.png',
+                'http://jsrun.it/assets/z/9/b/0/z9b0I.png',
+                'http://jsrun.it/assets/p/P/g/M/pPgMm.png'
+            ]);
+        }
+
+        /*----------------------------- Init functions ------------------------------*/
+
+        function init() {
+            audio.get(0).volume = vol;
+            sound.width(vol * 100 + '%');
+            stationInit();
+        }
+
+        function stationInit() {
+            audio.attr('src', stations[current][1]).bind('canplay', function() {
+                name.html(stations[current][0]);
+
+                a.eq(current).removeClass().addClass('current');
+
+                $(this).trigger('play');
+                equa = setInterval(equalizer, 150);
+            });
+        }
+
+        /*----------------------------- New station init -----------------------------*/
+
+        function newStation() {
+            var i = $(this).index();
+            current = i;
+
+            name.html('Loading...');
+            audio.unbind('canplay');
+            a.removeClass().eq(i).addClass('select');
+
+            equaStop();
+            stationInit();
+        }
+
+        /*--------------------------------- Equalizer ---------------------------------*/
+
+        function equalizer() {
+            lizer.each(function() {
+                var rand = Math.random() * 100 + '%';
+                $(this).css('height', rand);
+            });
+        }
+
+        function equaStop() {
+            clearInterval(equa);
+            lizer.each(function() {
+                $(this).css('height', 1);
+            });
+        }
+
+        /*----------------------------------- Volume ----------------------------------*/
+
+        function volControl(e) {
+            vol = (e.pageX - volume.offset().left) /  volume.width();
+            audio.get(0).volume = vol;
+            sound.width(vol * 100 + '%');
+            return false;
+        }
+
+        /*---------------------------- Show & Hide stations ---------------------------*/
+
+        function listHide() {
+            $(this).attr('id', 'on');
+            stats.hide();
+        }
+
+        function listShow() {
+            $(this).attr('id', 'off');
+            stats.show();
+        }
+
+        /*------------------------------------ Scroll ----------------------------------*/
+
+        function startScroll(e) {
+            s = true;
+            startY = e.pageY;
+            startTop = handle.offset().top - scrol.offset().top;
+        }
+
+        function scrolling(e) {
+
+            if (s == true) {
+
+                var top = startTop + e.pageY - startY;
+                if (top <= 0) top = 0;
+                if (top >= maxTop) top = maxTop;
+
+                var listTop = top * (list.height() - stats.height()) / maxTop * (-1);
+
+                handle.css('top', top);
+                list.css('top', listTop);
+            }
+        }
+
+        function end() {
+            s = false;
+            d = false;
+        }
+
+        /*----------------------------- Play & Pause events ---------------------------*/
+
+        function stopAudio() {
+            $(this).attr('id', 'play');
+            audio.trigger('pause');
+            equaStop();
+        }
+
+        function playAudio() {
+            $(this).attr('id', 'stop');
+            audio.trigger('play');
+            equa = setInterval(equalizer, 150);
+
+        }
+
+        /*------------------------------------ Drag -----------------------------------*/
+
+        function dragStart(e) {
+            d = true;
+            dragX = e.pageX;
+            dragY = e.pageY;
+            rLeft = radio.offset().left;
+            rTop = radio.offset().top;
+        }
+
+        function drag(e) {
+            if (d == true) {
+                var left = rLeft + e.pageX - dragX;
+                var top = rTop + e.pageY - dragY;
+                radio.css({
+                    'left': left,
+                    'top': top
+                });
+            }
+        }
+
+        /*------------------------------------ Init -----------------------------------*/
+
+        $(window).load(function() {
+            init();
+            volume.bind('mousedown', volControl);
+            off.live('mousedown', listHide);
+            on.live('mousedown', listShow);
+            stop.live('mousedown', stopAudio);
+            play.live('mousedown', playAudio);
+            a.bind('mousedown', newStation);
+            handle.bind('mousedown', startScroll);
+            stats.bind('mousemove', scrolling);
+            controls.bind('mousedown', dragStart);
+            $(document).bind('mousemove', drag);
+            $(document).bind('mouseup', end);
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

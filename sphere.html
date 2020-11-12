@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sphere</title>
+    <style>
+        body, html {height: 100%; width: 100%;}
+        body {margin: 0;}
+        canvas {display: block;}
+        body {
+            background-color: #111;
+            background-image: -webkit-radial-gradient(circle cover, #222, #000);
+            background-image:    -moz-radial-gradient(circle cover, #222, #000);
+            background-image:     -ms-radial-gradient(circle cover, #222, #000);
+            background-image:         radial-gradient(circle cover, #222, #000);
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+
+    <script>
+
+        var D = {
+
+            data: new Array(15),
+            points: 200,
+            radius: 80,
+            speed: 0.05,
+            circle: 65,
+
+            Fill: function(x, y) {
+                D.ctx.fillStyle = 'rgba(255,255,255,0.2)';
+                D.ctx.fillRect(D.canvas.width / 2 + x, D.canvas.height / 2 - y, 1, 1);
+            },
+
+            Factor: function(i) {
+                return (i - D.data.length / 2) * 2 * D.radius / D.data.length;
+            },
+
+            Increase: function(i) {
+                D.data[i] += D.speed;
+                if (D.data[i] > D.data.length) {
+                    D.data[i] = 0;
+                }
+            },
+
+            Add: function(i, e) {
+                var a1 = i * Math.PI / D.points - Math.PI / 2;
+                var x1 = Math.cos(a1) * e.x;
+                var y1 = Math.sin(a1) * D.radius;
+
+                var a2 = i * Math.PI / D.points;
+                var x2 = Math.cos(a2) * D.radius;
+                var y2 = Math.sin(a2) * e.y;
+
+                D.Fill(x1, y1);
+                D.Fill(x2, y2);
+            },
+
+            Sphere: function() {
+                for (var i = 0; i < D.data.length; i++) {
+                    var factor = {
+                        x: D.Factor(D.data[i]),
+                        y: D.Factor(i)
+                    };
+                    for (var j = 0; j < D.points; j++) {
+                        D.Add(j, factor);
+                    }
+                    D.Increase(i);
+                }
+            },
+
+            Clear: function() {
+                D.ctx.clearRect(0, 0, D.canvas.width, D.canvas.height);
+            },
+
+            Circle: function() {
+                D.ctx.beginPath();
+                D.ctx.arc(D.canvas.width / 2, D.canvas.height / 2, D.circle, 0, 2 * Math.PI, false);
+                D.ctx.fillStyle = D.gradient;
+                D.ctx.fill();
+            },
+
+            Stroke: function() {
+                D.ctx.beginPath();
+                D.ctx.arc(D.canvas.width / 2, D.canvas.height / 2, D.radius, 0, 2 * Math.PI, false);
+                D.ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+                D.ctx.stroke();
+            },
+
+            Update: function() {
+                D.Clear();
+                D.Stroke();
+                D.Circle();
+                D.Sphere();
+            },
+
+            Draw: function() {
+                D.Update();
+                requestAnimationFrame(D.Draw, D.canvas);
+            },
+
+            Gradient: function() {
+                var x1 = D.canvas.width / 2 - D.circle / 2;
+                var y1 = D.canvas.height / 2 + D.circle / 2;
+                var x2 = D.canvas.width / 2 + D.circle / 2;
+                var y2 = D.canvas.height/2 - D.circle / 2;
+                D.gradient = D.ctx.createLinearGradient(x1, y1, x2, y2);
+                D.gradient.addColorStop(0,'rgba(200,200,200,1)');
+                D.gradient.addColorStop(1,'rgba(70,70,70,1)');
+            },
+
+            Set: function() {
+                for (var i = 0; i < D.data.length; i++) {
+                    D.data[i] = i;
+                }
+                D.Gradient();
+            },
+
+            Size: function() {
+                D.canvas.width = window.innerWidth;
+                D.canvas.height = window.innerHeight;
+            },
+
+            Run: function() {
+                D.canvas = document.querySelector('canvas');
+                D.ctx = D.canvas.getContext('2d');
+                window.addEventListener('resize', D.Size, false);
+                D.Size();
+            },
+
+            Init: function() {
+                D.Run();
+                D.Set();
+                D.Draw();
+            }
+        };
+
+        D.Init();
+
+    </script>
+
+</body>
+</html>

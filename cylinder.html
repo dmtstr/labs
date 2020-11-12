@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>pseudosphere CSS 3D</title>
+</head>
+<body>
+
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin:0;
+            background:#000;
+            color:#FFF;
+            font-family:Arial, Helvetica, sans-serif;
+            overflow:hidden;
+            background: -webkit-radial-gradient(circle, #424242, #212121);
+            background:    -moz-radial-gradient(circle, #424242, #212121);
+            background:     -ms-radial-gradient(circle, #424242, #212121);
+            background:         radial-gradient(circle, #424242, #212121);
+        }
+        div {
+            position:absolute;
+            transform-style:preserve-3d;
+        }
+        #page {
+            height:100%;
+            width:100%;
+            perspective:700px;
+        }
+        #container {
+            top:50%; left:50%;
+            margin-top:-150px; margin-left:-150px;
+            height:300px;
+            width:300px;
+            animation:spin 10s linear infinite;
+        }
+        @keyframes spin {
+            from {transform:perspective(700px) translateZ(00px) rotateY(0deg) rotateZ(30deg);}
+            to   {transform:perspective(700px) translateZ(00px) rotateY(360deg) rotateZ(30deg);}
+        }
+        #meridian {
+            height:300px;
+            width:300px;
+            border:2px solid #4CAF50;
+            box-shadow: 0 0 2px #4CAF50;
+        }
+        #greenwich {
+            border-radius:100%;
+            border:2px solid #FFF;
+            height:300px; width:300px;
+        }
+    </style>
+
+    <div id="page">
+    	<div id="container">
+            <div id="sphere">
+            </div>
+        </div>        
+    </div>
+
+    <script>
+        var sphere = document.getElementById('sphere');
+        var i, div;
+
+        for (i = 1; i <= 36; i++) {
+            div = document.createElement('div');
+            div.id = 'meridian';
+            div.style.transform = 'rotateY('+i+'0deg)';
+            sphere.appendChild(div);
+        }
+        for (i = 1; i <= 19; i++) {
+            div = document.createElement('div');
+            div.id = 'greenwich';
+            if (i < 11) div.style.transform = 'perspective(700px) rotateX(90deg) translateZ( '+(-150+i*15)+'px) scale('+Math.sqrt(22500-Math.pow((11-i)*15,2))/150+')';
+            else div.style.transform = 'perspective(700px) rotateX(90deg) translateZ( '+(-150+i*15)+'px) scale('+Math.sqrt(22500-Math.pow((i-10)*15,2))/150+')';
+            sphere.appendChild(div);
+        }
+
+    </script>
+
+</body>
+</html>

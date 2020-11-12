@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Magic</title>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            margin: 0;
+            background: -webkit-radial-gradient(cover, #D1EAFF, #0C1C6B);
+            background:    -moz-radial-gradient(cover, #D1EAFF, #0C1C6B);
+            background:     -ms-radial-gradient(cover, #D1EAFF, #0C1C6B);
+            background:         radial-gradient(cover, #D1EAFF, #0C1C6B);
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas></canvas>
+
+
+    <script>
+
+        var D = {
+
+            lines: new Array(100),
+            dots: new Array(2000),
+
+            Random: function(min, max) {
+                return Math.random() * (max - min) + min;
+            },
+
+            Dot: function() {
+                this.r = Math.random() * D.R;
+                this.a = Math.random() * Math.PI * 2;
+                this.s = D.Random(1, 4);
+                this.n = Math.random() * 4;
+            },
+
+            Line: function() {
+                this.a = Math.random() * Math.PI * 2;
+                this.w = Math.random() * 10;
+                this.o = D.Random(0.01, 0.1);
+                this.s = Math.PI / D.Random(360, 1000);
+                this.p = Math.random() > 0.5;
+            },
+
+            Lines: function() {
+                for (var i = 0; i < D.lines.length; i++) {
+                    var L = D.lines[i];
+                    var x = D.canvas.width/2 + Math.cos(L.a) * D.R;
+                    var y = D.canvas.height/2 + Math.sin(L.a) * D.R;
+                    D.ctx.beginPath();
+                    D.ctx.moveTo(D.canvas.width/2, D.canvas.height/2);
+                    D.ctx.lineTo(x, y);
+                    D.ctx.lineWidth = L.w;
+                    D.ctx.strokeStyle = 'rgba(255,255,255,' + L.o + ')';
+                    D.ctx.stroke();
+                    L.a += L.s;
+                    if (L.p) {
+                        L.o += 0.005;
+                        if (L.o >= 0.1) L.p = false;
+                    }
+                    else {
+                        L.o -= 0.005;
+                        if (L.o <= 0) L.p = true;
+                    }
+                }
+            },
+
+            Dots: function() {
+                for (var i = 0; i < D.dots.length; i++) {
+                    var T = D.dots[i];
+                    var x = D.canvas.width/2 + Math.cos(T.a) * T.r;
+                    var y = D.canvas.height/2 + Math.sin(T.a) * T.r;
+                    D.ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                    D.ctx.fillRect(x, y, T.n, T.n);
+                    T.r -= T.s;
+                    if (T.r <= 0) T.r = D.R;
+                }
+            },
+
+            Clear: function() {
+                D.ctx.clearRect(0, 0, D.canvas.width, D.canvas.height);
+            },
+
+            Draw: function() {
+                D.Clear();
+                D.Lines();
+                D.Dots();
+                requestAnimationFrame(D.Draw, D.canvas);
+
+            },
+
+            Create: function() {
+                for (var i = 0; i < D.lines.length; i++) {
+                    D.lines[i] = new D.Line();
+                }
+                for (var j = 0; j < D.dots.length; j++) {
+                    D.dots[j] = new D.Dot();
+                }
+            },
+
+            Bind: function() {
+                window.addEventListener('resize', D.Size, false);
+            },
+
+            Size: function() {
+                D.canvas.width = window.innerWidth;
+                D.canvas.height = window.innerHeight;
+                D.R = Math.sqrt(D.canvas.width/2 * D.canvas.width/2 + D.canvas.height/2 * D.canvas.height/2);
+            },
+
+            Init: function() {
+                D.canvas = document.querySelector('canvas');
+                D.ctx = D.canvas.getContext('2d');
+            },
+
+            Run: function() {
+                D.Init();
+                D.Size();
+                D.Bind();
+                D.Create();
+                D.Draw();
+            }
+
+        };
+
+        D.Run();
+
+    </script>
+
+</body>
+</html>

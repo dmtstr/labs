@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>pyramid</title>
+</head>
+<body>
+
+<style>
+        /*
+    --------------------
+     Common
+    --------------------
+    */
+
+    body, html {
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        background: #3F51B5;
+        font-family: arial, sans-serif;
+        background: -webkit-radial-gradient(circle, #3F51B5, #1A237E);
+        background:    -moz-radial-gradient(circle, #3F51B5, #1A237E);
+        background:     -ms-radial-gradient(circle, #3F51B5, #1A237E);
+        background:         radial-gradient(circle, #3F51B5, #1A237E);
+    }
+    #demo {
+        position: absolute;
+        top: 50%; left: 50%;
+        height: 400px; width: 400px;
+        margin-top: -200px;
+        margin-left: -200px;
+        perspective: 500px;
+    }
+    #demo * {
+        display: block;
+        position: absolute;
+        transform-style: preserve-3d;
+    }
+    #spin {
+        top: 0; left: 0;
+        height: 400px; width: 400px;
+        transform: translateZ(-200px) rotateX(-20deg);
+    }
+    #base {
+        left: 100px; bottom: -100px;
+        height: 200px; width: 200px;
+        transform: rotateX(90deg);
+    }
+    span {
+        bottom: 50%; left: 0;
+        width: 100%; height: 35.777px;
+        overflow: hidden;
+        transform-origin: 50% 100%;
+    }
+    span:after, span:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0; bottom: 0;
+        width: 16px;
+        z-index: 1;
+        transform-origin: 100% 100%;
+    }
+    span:before {
+        left: 0;
+        transform: skew(-24.095deg);
+    }
+    span:after {
+        right: 0;
+        transform: skew(24.095deg);
+    }
+    i {
+        top: 0; bottom: 0;
+        left: 16px; right: 16px;
+        z-index: 2;
+        text-align: center;
+        font-style: normal;
+        font-size: 11px;
+        line-height: 35px;
+        font-weight: bold;
+    }
+    b {
+        transform: translateZ(32px);
+    }
+
+
+
+    /*
+    --------------------
+     P1
+    --------------------
+    */
+
+    #p1 {
+        top: 0; left: 0;
+        height: 200px; width: 200px;
+        background: #590401;
+        animation: p1 5s linear infinite;
+    }
+    #p1 b {
+        left: 16px; top: 16px;
+        width: 168px; height: 168px;
+        background: #590401;
+    }
+    #p1 span:nth-child(1) {transform: rotateZ(0deg) translateY(100px) rotateX(-63.43494882292201deg);}
+    #p1 span:nth-child(2) {transform: rotateZ(90deg) translateY(100px) rotateX(-63.43494882292201deg);}
+    #p1 span:nth-child(3) {transform: rotateZ(180deg) translateY(100px) rotateX(-63.43494882292201deg);}
+    #p1 span:nth-child(4) {transform: rotateZ(270deg) translateY(100px) rotateX(-63.43494882292201deg);}
+
+    #p1 span:nth-child(1) i, #p1 span:nth-child(1):after, #p1 span:nth-child(1):before {background: #AB1401;}
+    #p1 span:nth-child(2) i, #p1 span:nth-child(2):after, #p1 span:nth-child(2):before {background: #730601;}
+    #p1 span:nth-child(3) i, #p1 span:nth-child(3):after, #p1 span:nth-child(3):before {background: #AB1401;}
+    #p1 span:nth-child(4) i, #p1 span:nth-child(4):after, #p1 span:nth-child(4):before {background: #E51E01;}
+
+
+
+    /*
+    --------------------
+     P2
+    --------------------
+    */
+
+    #p2 {
+        top: 21px; left: 21px;
+        height: 158px; width: 158px;
+        background: #EF9B0F;
+        animation: p2 4s linear infinite;
+    }
+    #p2 b {
+        left: 16px; top: 16px;
+        width: 126px; height: 126px;
+        background: #EF9B0F;
+    }
+    #p2 span:nth-child(1) {transform: rotateZ(0deg) translateY(79px) rotateX(-63.43494882292201deg);}
+    #p2 span:nth-child(2) {transform: rotateZ(90deg) translateY(79px) rotateX(-63.43494882292201deg);}
+    #p2 span:nth-child(3) {transform: rotateZ(180deg) translateY(79px) rotateX(-63.43494882292201deg);}
+    #p2 span:nth-child(4) {transform: rotateZ(270deg) translateY(79px) rotateX(-63.43494882292201deg);}
+
+    #p2 span:nth-child(1) i, #p2 span:nth-child(1):after, #p2 span:nth-child(1):before {background: #FFFF00;}
+    #p2 span:nth-child(2) i, #p2 span:nth-child(2):after, #p2 span:nth-child(2):before {background: #FFDF00;}
+    #p2 span:nth-child(3) i, #p2 span:nth-child(3):after, #p2 span:nth-child(3):before {background: #FFFF00;}
+    #p2 span:nth-child(4) i, #p2 span:nth-child(4):after, #p2 span:nth-child(4):before {background: #FFBA00;}
+
+
+
+    /*
+    --------------------
+     P3
+    --------------------
+    */
+
+    #p3 {
+        top: 42px; left: 42px;
+        height: 116px; width: 116px;
+        background: #11772D;
+        animation: p3 3s linear infinite;
+    }
+    #p3 b {
+        left: 16px; top: 16px;
+        width: 84px; height: 84px;
+        background: #11772D;
+    }
+    #p3 span:nth-child(1) {transform: rotateZ(0deg) translateY(58px) rotateX(-63.43494882292201deg);}
+    #p3 span:nth-child(2) {transform: rotateZ(90deg) translateY(58px) rotateX(-63.43494882292201deg);}
+    #p3 span:nth-child(3) {transform: rotateZ(180deg) translateY(58px) rotateX(-63.43494882292201deg);}
+    #p3 span:nth-child(4) {transform: rotateZ(270deg) translateY(58px) rotateX(-63.43494882292201deg);}
+
+    #p3 span:nth-child(1) i, #p3 span:nth-child(1):after, #p3 span:nth-child(1):before {background: #00BB27;}
+    #p3 span:nth-child(2) i, #p3 span:nth-child(2):after, #p3 span:nth-child(2):before {background: #3ED715;}
+    #p3 span:nth-child(3) i, #p3 span:nth-child(3):after, #p3 span:nth-child(3):before {background: #00BB27;}
+    #p3 span:nth-child(4) i, #p3 span:nth-child(4):after, #p3 span:nth-child(4):before {background: #30AD23;}
+
+
+
+    /*
+    --------------------
+     P4
+    --------------------
+    */
+
+    #p4 {
+        top: 63px; left: 63px;
+        height: 74px; width: 74px;
+        background: #083262;
+        animation: p4 2s linear infinite;
+    }
+    #p4 b {
+        left: 16px; top: 16px;
+        width: 42px; height: 42px;
+        background: #083262;
+    }
+    #p4 span:nth-child(1) {transform: rotateZ(0deg) translateY(37px) rotateX(-63.43494882292201deg);}
+    #p4 span:nth-child(2) {transform: rotateZ(90deg) translateY(37px) rotateX(-63.43494882292201deg);}
+    #p4 span:nth-child(3) {transform: rotateZ(180deg) translateY(37px) rotateX(-63.43494882292201deg);}
+    #p4 span:nth-child(4) {transform: rotateZ(270deg) translateY(37px) rotateX(-63.43494882292201deg);}
+
+    #p4 span:nth-child(1) i, #p4 span:nth-child(1):after, #p4 span:nth-child(1):before {background: #050BF5;}
+    #p4 span:nth-child(2) i, #p4 span:nth-child(2):after, #p4 span:nth-child(2):before {background: #064FF6;}
+    #p4 span:nth-child(3) i, #p4 span:nth-child(3):after, #p4 span:nth-child(3):before {background: #050BF5;}
+    #p4 span:nth-child(4) i, #p4 span:nth-child(4):after, #p4 span:nth-child(4):before {background: #1B03D5;}
+
+
+
+    /*
+    --------------------
+     P4
+    --------------------
+    */
+
+    #p5 {
+        top: 84px; left: 84px;
+        height: 32px; width: 32px;
+        background: #330E6D;
+        animation: p5 1s linear infinite;
+    }
+    #p5 span:nth-child(1) {transform: rotateZ(0deg) translateY(16px) rotateX(-63.43494882292201deg);}
+    #p5 span:nth-child(2) {transform: rotateZ(90deg) translateY(16px) rotateX(-63.43494882292201deg);}
+    #p5 span:nth-child(3) {transform: rotateZ(180deg) translateY(16px) rotateX(-63.43494882292201deg);}
+    #p5 span:nth-child(4) {transform: rotateZ(270deg) translateY(16px) rotateX(-63.43494882292201deg);}
+
+    #p5 i {
+        left: 50%; right: 0;
+        height: 32px;
+        width: 35.777px;
+        background: rgba(255,0,0,1);
+        transform: rotateZ(63deg) skew(36.87deg);
+        transform-origin: 0 0;
+    }
+
+    #p5 span:nth-child(1) i {background: #5B1879;}
+    #p5 span:nth-child(2) i {background: #972972;}
+    #p5 span:nth-child(3) i {background: #5B1879;}
+    #p5 span:nth-child(4) i {background: #972972;}
+
+
+
+    /*
+    --------------------
+     Animation
+    --------------------
+    */
+
+
+    @keyframes p5 {
+        from {transform: translateZ(168px) rotateZ(0deg);}
+        to  {transform: translateZ(168px) rotateZ(360deg);}
+    }
+    @keyframes p4 {
+        from {transform: translateZ(126px) rotateZ(0deg);}
+        to  {transform: translateZ(126px) rotateZ(360deg);}
+    }
+    @keyframes p3 {
+        from {transform: translateZ(84px) rotateZ(0deg);}
+        to  {transform: translateZ(84px) rotateZ(360deg);}
+    }
+    @keyframes p2 {
+        from {transform: translateZ(42px) rotateZ(0deg);}
+        to  {transform: translateZ(42px) rotateZ(360deg);}
+    }
+
+    @keyframes p1 {
+        from {transform: rotateZ(0deg);}
+        to  {transform: rotateZ(360deg);}
+    }
+
+</style>
+
+ <div id="demo">
+        <div id="spin">
+
+            <div id="base">
+
+                <div id="p1">
+                    <span><i>AB1401</i></span>
+                    <span><i>730601</i></span>
+                    <span><i>AB1401</i></span>
+                    <span><i>E51E01</i></span>
+                    <b></b>
+                </div>
+
+                <div id="p2">
+                    <span><i>FFFF00</i></span>
+                    <span><i>FFDF00</i></span>
+                    <span><i>FFFF00</i></span>
+                    <span><i>FFBA00</i></span>
+                    <b></b>
+                </div>
+
+                <div id="p3">
+                    <span><i>00BB27</i></span>
+                    <span><i>3ED715</i></span>
+                    <span><i>00BB27</i></span>
+                    <span><i>30AD23</i></span>
+                    <b></b>
+                </div>
+
+                <div id="p4">
+                    <span><i>050BF5</i></span>
+                    <span><i>064FF6</i></span>
+                    <span><i>050BF5</i></span>
+                    <span><i>1B03D5</i></span>
+                    <b></b>
+                </div>
+
+                <div id="p5">
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                    <span><i></i></span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

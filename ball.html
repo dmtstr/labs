@@ -1,0 +1,131 @@
+<html>
+<head>
+    <title>Demo</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            background: -webkit-radial-gradient(circle, #212121, #000);
+            background:    -moz-radial-gradient(circle, #212121, #000);
+            background:     -ms-radial-gradient(circle, #212121, #000);
+            background:         radial-gradient(circle, #212121, #000);
+        }
+        canvas {
+            position: absolute;
+            top: 50%; left: 50%;
+            margin: -200px 0 0 -200px;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+        var size = 400;
+
+        canvas.width = canvas.height = size;
+
+        var radius = 100;
+        var orbit = [];
+        var angle = 0;
+        var speed = Math.PI / 180;
+        var on = 20;
+        var pn = 60;
+        var d = 0;
+
+        function init() {
+            for (var i = 0; i < on; i++) {
+
+                var az = i * Math.PI / on;
+                orbit[i] = [];
+
+                for (var j = 0; j < pn; j++) {
+
+                    var a = j * Math.PI * 2 / pn;
+                    var x = Math.cos(a) * radius;
+                    var y = 0;
+                    var z = Math.sin(a) * radius;
+                    var rz = rotateZ(x, y, z, az);
+                    var r = Math.round(4 * Math.abs(Math.cos(a)));
+
+                    orbit[i].push({
+                        x: rz.x,
+                        y: rz.y,
+                        z: rz.z,
+                        r: r
+                    });
+                }
+            }
+        }
+
+        function draw() {
+
+            d++; d > 360 && (d = 0);
+            ctx.clearRect(0, 0, size, size);
+            ctx.fillStyle = 'hsla(' + d + ', 100%, 50%, 0.5)';
+            angle += speed;
+
+            for (var n = 0; n < orbit.length; n++) {
+                for (var m = 0; m < orbit[n].length; m++) {
+                    var s = orbit[n][m];
+                    var rotate = rotateXY(s.x, s.y, s.z, angle);
+                    var data = get(rotate.x, rotate.y, rotate.z);
+                    ctx.beginPath();
+                    ctx.arc(data.x, data.y, 3, 0, 2 * Math.PI, false);
+                    ctx.fill();
+                }
+            }
+        }
+
+        init();
+        setInterval(draw, 33);
+
+
+        function rotateXY(x, y, z, a) {
+            return {
+                x: x * Math.cos(a) + (y * Math.sin(a) + z * Math.cos(a)) * Math.sin(a),
+                y: y * Math.cos(a) - z * Math.sin(a),
+                z: (y * Math.sin(a) + z * Math.cos(a)) * Math.cos(a) - x * Math.sin(a)
+            };
+        }
+
+        function rotateZ(x, y, z, a) {
+            return {
+                x: x * Math.cos(a) - y * Math.sin(a),
+                y: x * Math.sin(a) + y * Math.cos(a),
+                z: z
+            }
+        }
+
+        function rotateY(x, y, z, a) {
+            return {
+                x: x * Math.cos(a) + z * Math.sin(a),
+                y: y,
+                z: z * Math.cos(a) - x * Math.sin(a)
+            }
+        }
+
+        function rotateX(x, y, z, a) {
+            return {
+                x: x,
+                y: y * Math.cos(a) - z * Math.sin(a),
+                z: y * Math.sin(a) + z * Math.cos(a)
+            }
+        }
+
+        function get(x, y, z) {
+            var p = 1 + z / 200;
+            return {
+                x: size / 2 + x / p,
+                y: size / 2 + y / p
+            }
+        }
+
+    </script>
+</body>
+</html>

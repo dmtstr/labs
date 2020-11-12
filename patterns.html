@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Patterns</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas></canvas>
+
+    <script>
+
+        var D = {
+
+            circle: new Array(20),
+            radius: 80,
+            noise: 16,
+            speed: 0.2,
+            size: 700,
+
+            color: {
+                b: 'rgba(255,255,255,0.25)',
+                a: 'rgba(0,0,0,1)'
+            },
+
+            X: function(x) {
+                return D.canvas.width / 2 + x;
+            },
+
+            Y: function(y) {
+                return D.canvas.height / 2 - y;
+            },
+
+            Circle: function(i) {
+                this.r = D.radius - i * D.radius / D.circle.length;
+                this.e = i % 2 ? true : false;
+                this.max = Math.random() * D.noise;
+                this.min = -Math.random() * D.noise;
+                this.val = Math.random() * (this.max - this.min) + this.min;
+            },
+
+            Clear: function() {
+                D.ctx.fillStyle = D.color.a;
+                D.ctx.fillRect(0, 0, D.canvas.width, D.canvas.height);
+            },
+
+            Change: function(C) {
+                for (var i = 0; i < D.size; i++) {
+                    var a = i * Math.PI * 2 / D.size;
+                    var x = Math.cos(a) * (C.r - C.val * Math.cos(i/4));
+                    var y = Math.sin(a) * (C.r - C.val * Math.cos(i/4));
+                    D.ctx.fillStyle = D.color.b;
+                    D.ctx.fillRect(D.X(x), D.Y(y), 1, 1);
+                }
+                D.Check(C);
+            },
+
+            Check: function(C) {
+                C.val = C.e ? C.val + D.speed : C.val - D.speed;
+                if (C.val < C.min) {
+                    C.e = true;
+                    C.max = Math.random() * D.noise;
+                }
+                if (C.val > C.max) {
+                    C.e = false;
+                    C.min = -Math.random() * D.noise;
+                }
+            },
+
+            Update: function() {
+                D.Clear();
+                for (var i = 0; i < D.circle.length; i++) {
+                    D.Change(D.circle[i]);
+                }
+            },
+
+            Draw: function() {
+                D.Update();
+                requestAnimationFrame(D.Draw, D.canvas);
+            },
+
+            Set: function() {
+                for (var i = 0; i < D.circle.length; i++) {
+                    D.circle[i] = new D.Circle(i);
+                }
+            },
+
+            Size: function() {
+                D.canvas.width = window.innerWidth;
+                D.canvas.height = window.innerHeight;
+            },
+
+            Run: function() {
+                D.canvas = document.querySelector('canvas');
+                D.ctx = D.canvas.getContext('2d');
+                window.addEventListener('resize', D.Size, false);
+            },
+
+            Init: function() {
+                D.Run();
+                D.Size();
+                D.Set();
+                D.Draw();
+            }
+
+        };
+
+        D.Init();
+
+    </script>
+</body>
+</html>

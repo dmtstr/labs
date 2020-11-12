@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Transformer 3D - js do it</title>
+<meta name="Description" content="" />
+<meta name="Keywords"  content="" />
+</head>
+<body>
+
+<style>
+    body, html {
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        font-family: arial, sans-serif;
+        overflow:hidden; margin:0;
+        background-color: #F44336;
+        background-image: -webkit-linear-gradient(left, #F44336, #B71C1C, #F44336);
+        background-image:    -moz-linear-gradient(left, #F44336, #B71C1C, #F44336);
+        background-image:     -ms-linear-gradient(left, #F44336, #B71C1C, #F44336);
+        background-image:         linear-gradient(left, #F44336, #B71C1C, #F44336);
+    }
+    div {
+        position:absolute; margin:0;
+        transform-style:preserve-3d;
+    }
+    #perspective {
+        top: 10%; left: 10%;
+        height:80%; width:80%;
+        perspective:1000px;
+    }
+    #container {
+        height:100%; width:100%;
+        transform: rotateY(90deg) translateX(50%) rotateY(-90deg);
+    }
+    #focus {
+        top:00%; right:00%; bottom:00%; left:00%;
+        animation:spin 8s infinite linear;
+    }
+    @keyframes spin {
+        from {transform:rotatey(0deg);}
+        to   {transform:rotatey(360deg);}
+    }
+    #background {
+        top:00%; right:00%; bottom:00%; left:00%;
+        text-align:center;
+    }
+    #background img {height:100%;}
+    span {position:absolute; outline:1px solid #F44336; background:rgba(255,255,255,.50);}
+
+    #a1 {top:00%; bottom:75%; animation:a1 5s infinite linear;}
+    #a3 {top:00%; bottom:75%; animation:a3 5s infinite linear;}
+    #a4 {top:00%; bottom:75%; animation:a4 5s infinite linear;}
+    #a2 {top:00%; right:50%; bottom:75%; left:25%;}
+    @keyframes a1 {
+        from {right:75.0%; left:00.0%; transform: rotateY(0deg);}
+        15%  {right:75.0%; left:00.0%; transform: rotateY(0deg);}
+        30%  {right:75.0%; left:00.0%; transform: rotateY(270deg) translateX(-50%);}
+        45%  {right:62.5%; left:12.5%; transform: rotateY(270deg) translateX(-50%);}
+        70%  {right:62.5%; left:12.5%; transform: rotateY(270deg) translateX(-50%);}
+        85%  {right:75.0%; left:00.0%; transform: rotateY(270deg) translateX(-50%);}
+        to   {right:75.0%; left:00.0%; transform: rotateY(0deg);}
+    }
+    @keyframes a3 {
+        from {right:25%; left:50%; transform: rotateY(0deg);}
+        15%  {right:25%; left:50%; transform: rotateY(0deg);}
+        30%  {right:25%; left:50%; transform: rotateY(270deg) translateX(-100%) rotateY(-90deg);}
+        45%  {right:50%; left:25%; transform: rotateY(270deg) translateX(-100%) rotateY(-90deg);}
+        70%  {right:50%; left:25%; transform: rotateY(270deg) translateX(-100%) rotateY(-90deg));}
+        85%  {right:25%; left:50%; transform: rotateY(270deg) translateX(-100%) rotateY(-90deg);}
+        to   {right:25%; left:50%; transform: rotateY(0deg);}
+    }
+    @keyframes a4 {
+        from {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        15%  {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        30%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(50%);}
+        45%  {right:37.5%; left:37.5%; transform: rotateY(90deg) translateX(50%);}
+        70%  {right:37.5%; left:37.5%; transform: rotateY(90deg) translateX(50%);}
+        85%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(50%);}
+        to   {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+    }
+
+    #b1 {top:25%; bottom:50%; animation:b1 5s infinite linear;}
+    #b2 {top:25%; bottom:50%; animation:b2 5s infinite linear;}
+    #b3 {top:25%; bottom:50%; animation:b3 5s infinite linear;}
+    #b4 {top:25%; bottom:50%; animation:b4 5s infinite linear;}
+    @keyframes b1 {
+        from {right:75%; left:00%; transform: rotateY(0deg);}
+        15%  {right:75%; left:00%; transform: rotateY(0deg);}
+        30%  {right:75%; left:00%; transform: rotateY(180deg);}
+        45%  {right:00%; left:75%; transform: rotateY(180deg);}
+        70%  {right:00%; left:75%; transform: rotateY(180deg);}
+        85%  {right:75%; left:00%; transform: rotateY(180deg);}
+        to   {right:75%; left:00%; transform: rotateY(0deg);}
+    }
+    @keyframes b2 {
+        from {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+        15%  {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+        30%  {right:50.0%; left:25.0%; transform: rotateY(-90deg) translateX(50%);}
+        45%  {right:12.5%; left:62.5%; transform: rotateY(-90deg) translateX(50%);}
+        70%  {right:12.5%; left:62.5%; transform: rotateY(-90deg) translateX(50%);}
+        85%  {right:50.0%; left:25.0%; transform: rotateY(-90deg) translateX(50%);}
+        to   {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+    }
+    @keyframes b3 {
+        from {right:25%; left:50%; transform: rotateY(0deg);}
+        15%  {right:25%; left:50%; transform: rotateY(0deg);}
+        30%  {right:25%; left:50%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        45%  {right:00%; left:75%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        70%  {right:00%; left:75%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        85%  {right:25%; left:50%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        to   {right:25%; left:50%; transform: rotateY(0deg);}
+    }
+    @keyframes b4 {
+        from {right: 00.0%; left:75.0%; transform: rotateY(0deg);}
+        15%  {right: 00.0%; left:75.0%; transform: rotateY(0deg);}
+        30%  {right: 00.0%; left:75.0%; transform: rotateY(90deg) translateX(-50%);}
+        45%  {right:-12.5%; left:87.5%; transform: rotateY(90deg) translateX(-50%);}
+        70%  {right:-12.5%; left:87.5%; transform: rotateY(90deg) translateX(-50%);}
+        85%  {right: 00.0%; left:75.0%; transform: rotateY(90deg) translateX(-50%);}
+        to   {right: 00.0%; left:75.0%; transform: rotateY(0deg);}
+    }
+    #c1 {top:50%; right:75%; bottom:25%; left:00%; animation:c1 5s infinite linear;}
+    #c2 {top:50%; bottom:25%; animation:c2 5s infinite linear;}
+    #c3 {top:50%; bottom:25%; animation:c3 5s infinite linear;}
+    #c4 {top:50%; right:00%; bottom:25%; left:75%; animation:c4 5s infinite linear;}
+    @keyframes c1 {
+        from {transform: rotateY(0deg);}
+        15%  {transform: rotateY(0deg);}
+        30%  {transform: rotateY(270deg) translateX(-100%) rotateY(-90deg);}
+        85%  {transform: rotateY(270deg) translateX(-100%) rotateY(-90deg);}
+        to   {transform: rotateY(0deg);}
+    }
+    @keyframes c2 {
+        from {right:50.0%; left: 25.0%; transform: rotateY(0deg);}
+        15%  {right:50.0%; left: 25.0%; transform: rotateY(0deg);}
+        30%  {right:50.0%; left: 25.0%; transform: rotateY(-90deg) translateX(-50%);}
+        45%  {right:87.5%; left:-12.5%; transform: rotateY(-90deg) translateX(-50%);}
+        70%  {right:87.5%; left:-12.5%; transform: rotateY(-90deg) translateX(-50%);}
+        85%  {right:50.0%; left: 25.0%; transform: rotateY(-90deg) translateX(-50%);}
+        to   {right:50.0%; left: 25.0%; transform: rotateY(0deg);}
+    }
+    @keyframes c3 {
+        from {right:25%; left:50%;}
+        30%  {right:25%; left:50%;}
+        45%  {right:75%; left:00%;}
+        70%  {right:75%; left:00%;}
+        85%  {right:25%; left:50%;}
+        to   {right:25%; left:50%;}
+    }
+    @keyframes c4 {
+        from {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        15%  {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        30%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(50%);}
+        45%  {right:62.5%; left:12.5%; transform: rotateY(90deg) translateX(50%);}
+        70%  {right:62.5%; left:12.5%; transform: rotateY(90deg) translateX(50%);}
+        85%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(50%);}
+        to   {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+    }
+    #d1 {top:75%; bottom:00%; animation:d1 5s infinite linear;}
+    #d2 {top:75%; bottom:00%; animation:d2 5s infinite linear;}
+    #d4 {top:75%; bottom:00%; animation:d4 5s infinite linear;}
+    #d3 {top:75%; right:25%; bottom:00%; left:50%; animation:d3 5s infinite linear;}
+    @keyframes d1 {
+        from {right:75%; left:00%; transform: rotateY(0deg);}
+        15%  {right:75%; left:00%; transform: rotateY(0deg);}
+        30%  {right:75%; left:00%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        45%  {right:25%; left:50%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        70%  {right:25%; left:50%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        85%  {right:75%; left:00%; transform: rotateY(90deg) translateX(-100%) rotateY(-90deg);}
+        to   {right:75%; left:00%; transform: rotateY(0deg);}
+    }
+    @keyframes d2 {
+        from {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+        15%  {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+        30%  {right:50.0%; left:25.0%; transform: rotateY(-90deg) translateX(50%);}
+        45%  {right:37.5%; left:37.5%; transform: rotateY(-90deg) translateX(50%);}
+        70%  {right:37.5%; left:37.5%; transform: rotateY(-90deg) translateX(50%);}
+        85%  {right:50.0%; left:25.0%; transform: rotateY(-90deg) translateX(50%);}
+        to   {right:50.0%; left:25.0%; transform: rotateY(0deg);}
+    }
+    @keyframes d3 {
+        from {transform: rotateY(0deg);}
+        15%  {transform: rotateY(0deg);}
+        30%  {transform: rotateY(180deg);}
+        85%  {transform: rotateY(180deg);}
+        to   {transform: rotateY(0deg);}
+    }
+    @keyframes d4 {
+        from {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        15%  {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+        30%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(-50%);}
+        45%  {right:12.5%; left:62.5%; transform: rotateY(90deg) translateX(-50%);}
+        70%  {right:12.5%; left:62.5%; transform: rotateY(90deg) translateX(-50%);}
+        85%  {right:00.0%; left:75.0%; transform: rotateY(90deg) translateX(-50%);}
+        to   {right:00.0%; left:75.0%; transform: rotateY(0deg);}
+    }
+    h1 {
+        color:#F44336;
+        text-align:center;
+        font-size: 13px;
+    }
+</style>
+
+<div id="perspective">
+<div id="container">
+<div id="focus">
+	
+    <span id="a1"><h1>a1</h1></span>
+    <span id="a2"><h1>a1</h1></span>
+    <span id="a3"><h1>a3</h1></span>
+    <span id="a4"><h1>a4</h1></span>
+    
+    <span id="b1"><h1>b1</h1></span>
+    <span id="b2"><h1>b2</h1></span>
+    <span id="b3"><h1>b3</h1></span>
+    <span id="b4"><h1>b4</h1></span>
+    
+    <span id="c1"><h1>c1</h1></span>
+    <span id="c2"><h1>c2</h1></span>
+    <span id="c3"><h1>c3</h1></span>
+    <span id="c4"><h1>c4</h1></span>
+    
+    <span id="d1"><h1>d1</h1></span>
+    <span id="d2"><h1>d2</h1></span>
+    <span id="d3"><h1>d3</h1></span>
+    <span id="d4"><h1>d4</h1></span>
+    
+  
+</div>
+</div>
+</div>
+
+
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

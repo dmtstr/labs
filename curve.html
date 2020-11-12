@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Curve</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABp0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuMTFH80I3AAAAKUlEQVQ4T2P49OnTfyBgoBYeNZByPGog5XjUQMrxqIGU4yFiIPXwp/8AWj/MdWUbK0AAAAAASUVORK5CYII=) center center;
+            font-family: arial, sans-serif;
+            margin: 0;
+            font-size: 0;
+            text-align: center;
+            color: #999;
+        }
+        body:before {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+        section {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 20px;
+        }
+        hr, a, section:before {
+            font-size: 11px;
+            font-style: italic;
+            line-height: 20px;
+        }
+        section:before {
+            content: '0';
+            position: absolute;
+            bottom: 0; left: 8px;
+        }
+        hr {
+            position: absolute;
+            border: 0; margin: 0;
+        }
+        hr:nth-child(1) {
+            top: 2px; left: 20px;
+            height: 100%;
+            border-right: 1px dashed #AAA;
+        }
+        hr:nth-child(2) {
+            bottom: 20px; left: 0;
+            width: 100%;
+            border-top: 1px dashed #AAA;
+        }
+        hr:before {
+            content: '';
+            position: absolute;
+            width: 5px; height: 5px;
+            border-top: 2px solid #AAA;
+            border-left: 2px solid #AAA;
+        }
+        hr:nth-child(1):before {
+            left: -3px; top: 0;
+            -webkit-transform: rotate(45deg);
+               -moz-transform: rotate(45deg);
+                    transform: rotate(45deg);
+        }
+        hr:nth-child(2):before {
+            right: 0; top: -3px;
+            -webkit-transform: rotate(135deg);
+               -moz-transform: rotate(135deg);
+                    transform: rotate(135deg);
+        }
+        hr:after {
+            position: absolute;
+            top: 0;
+        }
+        hr:nth-child(1):after {
+            content: 'x';
+            left: -12px;
+        }
+        hr:nth-child(2):after {
+            content: 'y';
+            right: 8px;
+        }
+        a {
+            position: absolute;
+            display: block;
+            top: 0; right: 4px;
+            cursor: pointer;
+            -webkit-user-select: none;
+               -moz-user-select: none;
+                    user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <hr><hr>
+        <canvas></canvas>
+        <a>randomize</a>
+    </section>
+
+    <script>
+
+        var D = {
+
+            size: 380,
+            drag: false,
+            points: new Array(4),
+            radius: 40,
+            speed: 0.4,
+
+            Points: function() {
+                for (var i = 0; i < D.points.length; i++) {
+                    var x = D.points[i].x;
+                    var y = D.points[i].y;
+
+                    D.ctx.beginPath();
+                    D.ctx.arc(x, y, 3, 0, 2 * Math.PI, false);
+                    D.ctx.fillStyle = '#FFF';
+                    D.ctx.fill();
+
+                    D.ctx.lineWidth = 2;
+                    D.ctx.strokeStyle = '#000';
+                    D.ctx.stroke();
+
+                    D.ctx.fillStyle = '#666';
+                    D.ctx.font = '7px Arial';
+                    D.ctx.fillText(x + ', ' + (D.size - y), x + 8, y - 4);
+                }
+            },
+
+            Lines: function() {
+                for (var i = 0; i < D.points.length - 1; i++) {
+                    D.ctx.beginPath();
+                    D.ctx.moveTo(D.points[i].x, D.points[i].y);
+                    D.ctx.lineTo(D.points[i+1].x, D.points[i+1].y);
+                    D.ctx.lineWidth = 1;
+                    D.ctx.strokeStyle = '#CCC';
+                    D.ctx.stroke();
+                }
+            },
+
+            Find: function(e) {
+                e.y = e.a ? e.y + D.speed : e.y - D.speed;
+                if (e.y > D.radius || e.y < -D.radius) {
+                    D.remove = true;
+                }
+                return +e.y.toFixed(1);
+            },
+
+            Add: function(y, c) {
+                D.ctx.beginPath();
+                D.ctx.moveTo(D.points[0].x, D.points[0].y);
+                D.ctx.bezierCurveTo(D.points[1].x, D.points[1].y + y, D.points[2].x, D.points[2].y + y, D.points[3].x, D.points[3].y);
+                D.ctx.lineWidth = y ? 1 : 2;
+                D.ctx.strokeStyle = 'rgba(255,0,0,' + c + ')';
+                D.ctx.stroke();
+            },
+
+            Curves: function() {
+
+                D.Add(0, 1);
+
+                for (var i = 0; i < D.curves.length; i++) {
+                    var y = D.Find(D.curves[i]);
+                    var c = 1 - Math.abs(y) / D.radius;
+                    D.Add(y, c);
+                }
+                if (D.remove) {
+                    D.curves.splice(0, 2);
+                    D.remove = false;
+                }
+            },
+
+            Clear: function() {
+                D.index++;
+                D.ctx.clearRect(0, 0, D.size, D.size);
+                if (D.index % 20 === 0) D.Create();
+            },
+
+            Update: function() {
+                D.Clear();
+                D.Lines();
+                D.Curves();
+                D.Points();
+            },
+
+            Draw: function() {
+                D.Update();
+                requestAnimationFrame(D.Draw, D.canvas);
+            },
+
+            Down: function(e) {
+                for (var i = 0; i < D.points.length; i++) {
+                    D.position = D.canvas.getBoundingClientRect();
+                    var minX = e.pageX > D.position.left + D.points[i].x - 5;
+                    var maxX = e.pageX < D.position.left + D.points[i].x + 5;
+                    var minY = e.pageY > D.position.top + D.points[i].y - 5;
+                    var maxY = e.pageY < D.position.top + D.points[i].y + 5;
+                    if (minX && maxX && minY && maxY)  D.drag = i;
+                }
+            },
+
+            Move: function(e) {
+                if (D.drag !== false) {
+                    D.points[D.drag].x = e.pageX - D.position.left;
+                    D.points[D.drag].y = e.pageY - D.position.top;
+                }
+            },
+
+            Up: function() {
+                D.drag = false;
+            },
+
+            Create: function() {
+                for (var i = 0; i < 2; i++) {
+                    D.curves.push({
+                        a: i ? true : false,
+                        y: 0
+                    });
+                }
+            },
+
+            GET: {
+                min: {x: 10, y: 10},
+                max: {x: 340, y: 370},
+
+                X: function() {
+                    return D.GET.Random(D.GET.min.x, D.GET.max.x);
+                },
+
+                Y: function() {
+                    return D.GET.Random(D.GET.min.y, D.GET.max.y);
+                },
+
+                Random: function(min, max) {
+                    return Math.round(Math.random() * (max - min) + min);
+                }
+
+            },
+
+            Set: function() {
+                for (var i = 0; i < D.points.length; i++) {
+                    D.points[i] = {
+                        x: D.GET.X(),
+                        y: D.GET.Y()
+                    }
+                }
+            },
+
+            Bind: function() {
+                D.canvas.addEventListener('mousedown', D.Down, false);
+                D.canvas.addEventListener('mousemove', D.Move, false);
+                D.canvas.addEventListener('mouseup', D.Up, false);
+                D.canvas.addEventListener('mouseout', D.Up, false);
+                D.refresh.addEventListener('click', D.Start, false);
+            },
+
+            Start: function() {
+                D.curves = [];
+                D.index = 0;
+                D.Set();
+                D.Create();
+            },
+
+            Init: function() {
+                D.canvas = document.querySelector('canvas');
+                D.ctx = D.canvas.getContext('2d');
+                D.canvas.width = D.canvas.height = D.size;
+                D.refresh = document.querySelector('a');
+                D.Bind();
+                D.Start();
+                D.Draw();
+            }
+
+        };
+
+        D.Init();
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Circles</title>
+</head>
+
+<body>
+
+	<style>
+		body, html {
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			margin: 0;
+			background: -webkit-linear-gradient(left, #407821, #62AA2A, #4A7B20);
+			background:    -moz-linear-gradient(left, #407821, #62AA2A, #4A7B20);
+			background:     -ms-linear-gradient(left, #407821, #62AA2A, #4A7B20);
+			background:         linear-gradient(left, #407821, #62AA2A, #4A7B20);
+		}
+		body:before {
+			position: absolute;
+			content: '';
+			top: 0; right: 0;
+			bottom: 0; left: 0;
+			z-index: 0;
+			background: -webkit-radial-gradient(50% 100%, contain farthest-side, rgba(205,231,44,1), rgba(205,231,44,0));
+			background:    -moz-radial-gradient(50% 100%, contain farthest-side, rgba(205,231,44,1), rgba(205,231,44,0));
+			background:     -ms-radial-gradient(50% 100%, contain farthest-side, rgba(205,231,44,1), rgba(205,231,44,0));
+			background:         radial-gradient(50% 100%, contain farthest-side, rgba(205,231,44,1), rgba(205,231,44,0));
+		}
+		canvas {
+			display: block;
+			position: relative;
+			z-index: 1;
+		}
+	</style>
+
+
+	<script>
+
+		var canvas, ctx;
+		var node = new Array(20);
+
+		var figure = function(r) {
+			var circles = [];
+			var max = r / 3;
+			var min = r / 6;
+
+			while (r > max) {
+				var s = random(min, max);
+				r -= s;
+				circles.push({
+					r: r,
+					s: random(0, s)
+				})
+			}
+			return circles;
+		};
+
+		var random = function(min, max) {
+			return min + Math.random() * (max - min);
+		};
+
+		var Node = function() {
+			this.r = random(20, 60);
+			this.x = random(this.r, canvas.width - this.r);
+			this.y = random(this.r, canvas.height - this.r);
+			this.a = random(0, Math.PI);
+			this.s = random(2, 8);
+			this.c = figure(this.r);
+		};
+
+		var ani = function() {
+			draw();
+			requestAnimationFrame(ani);
+		};
+
+		var draw = function() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			for (var i = 0; i < node.length; i++) {
+				checkBorder(node[i]);
+				fill(node[i]);
+			}
+		};
+
+		var checkBorder = function(a) {
+			if (a.x > canvas.width - a.r || a.x < a.r) a.a = Math.PI - a.a;
+			if (a.y > canvas.height - a.r || a.y < a.r) a.a = Math.PI * 2 - a.a;
+		};
+
+		var fill = function(a) {
+			a.x += Math.cos(a.a) * a.s;
+			a.y += Math.sin(a.a) * a.s;
+			ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+			for (var i = 0; i < a.c.length; i++) {
+				ctx.beginPath();
+				ctx.lineWidth = a.c[i].s;
+				ctx.arc(a.x, a.y, a.c[i].r, 0, 2 * Math.PI, false);
+				ctx.stroke();
+			}
+		};
+
+		var run = function() {
+			for (var i = 0; i < node.length; i++) {
+				node[i] = new Node();
+			}
+		};
+
+		var resize = function() {
+			size();
+			run();
+		};
+
+		var size = function() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		};
+
+		var set = function() {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+		};
+
+		var init = function() {
+			set();
+			size();
+			run();
+			requestAnimationFrame(ani);
+		};
+
+		document.addEventListener('DOMContentLoaded', init, false);
+		document.addEventListener('click', resize, false);
+		window.addEventListener('resize', resize, false);
+
+	</script>
+
+	<canvas id="canvas"></canvas>
+
+</body>
+</html>
