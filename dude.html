@@ -524,6 +524,13 @@
                 for (var i = 0; i < Dude.d.length; i++) {
                     Dude.d[i].addEventListener('transitionend', Dude.Start, false);
                 }
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'ArrowLeft') Dude.Change.call(Dude.a[0]);
+                    if (event.key === 'ArrowUp') Dude.Change.call(Dude.a[1]);
+                    if (event.key === 'ArrowRight') Dude.Change.call(Dude.a[2]);
+                    if (event.key === 'ArrowDown') Dude.Change.call(Dude.a[3]);
+                    if (event.key === ' ') Dude.Change.call(Dude.a[4]);
+                })
             },
 
             Init: function() {
